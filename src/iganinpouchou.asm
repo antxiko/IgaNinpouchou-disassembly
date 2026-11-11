@@ -1141,7 +1141,7 @@ fila8:		; B = A / 8
 suelo_lado:		; La de al lado: una pared?
 	inc hl			;88f4   ; la siguiente a la derecha
 	ld a,(hl)			;88f5
-	cp 06ch		;88f6   ; un agujero: hacia la izquierda
+	cp 06ch		;88f6   ; un foso: hacia la izquierda
 	jr z,vuelta_izq		;88f8
 	ld a,(iy+009h)		;88fa   ; hacia donde va?
 	and a			;88fd
@@ -1416,7 +1416,7 @@ pantalla_juego:		; La pantalla del juego: apagada, en blanco, la fase, el marcad
 	call 00041h		;8b08   ; DISSCR
 	call ram_borra		;8b0b   ; la RAM del juego a cero
 	call pantalla_borra		;8b0e   ; la pantalla en blanco
-	call tiempo_1100		;8b11   ; TIME 1100
+	call tiempo_mil		;8b11   ; TIME 1000
 	xor a			;8b14
 	ld (0e046h),a		;8b15   ; los botones a 0
 	ld (0e040h),a		;8b18
@@ -1710,7 +1710,7 @@ marcador:		; El marcador: TIME y HISCORE (fila 0, columna 7), SCORE (fila 1, col
 	call tiempo_vram		;8d72   ; TIME
 	call vidas_pinta		;8d75   ; las vidas
 	ld de,0182ch		;8d78   ; en la fila 1, columna 12...
-	ld hl,08f5dh		;8d7b   ; ...el dibujo del ninja y ":00"
+	ld hl,08f5dh		;8d7b   ; ...el ninja y ":00", la cuenta de tumbados
 	ld bc,00004h		;8d7e
 	call 0005ch		;8d81   ; LDIRVM
 	ret			;8d84
@@ -1817,11 +1817,11 @@ tiempo_vram_hl:		; ...o de HL en la fila 1, columna 18
 	ld de,0180ch		;8e18   ; en la fila 1, columna 18
 	ld bc,00004h		;8e1b
 	jp 0005ch		;8e1e
-tiempo_1100:		; TIME a 1100 de partida: las cifras a 0 y luego 0xE083 y 0xE084 a 1 (TIME guarda al reves: 0xE080 las unidades)
+tiempo_mil:		; TIME a 1000 al empezar: las cifras a 0 y el millar (0xE083) a 1, y su copia de la pantalla (0xE084) tambien
 	call tiempo_borra		;8e21   ; todo a 0
 	ld a,001h		;8e24   ; un 1...
-	ld (0e084h),a		;8e26   ; ...en la copia de los millares
-	ld (0e083h),a		;8e29   ; ...y en las centenas
+	ld (0e084h),a		;8e26   ; ...en la copia del millar
+	ld (0e083h),a		;8e29   ; ...y en el millar
 	ret			;8e2c
 tiempo_borra:		; Las cifras de TIME y su copia a 0
 	xor a			;8e2d   ; la copia y las cifras a 0...
@@ -1971,10 +1971,10 @@ DATA_texto_hiscore:
 	defb 000h,000h	; 8f5b
 
 ; ----------------------------------------------------------------------
-; DATOS texto_vidas: 0xE7 (el dibujo del ninja) y ":00", las vidas del
-;   marcador
+; DATOS texto_tumbados: 0xE7 (el dibujo del ninja) y ":00": la cuenta de los
+;   tumbados del marcador (fila 1, columna 12)
 ;   0x8f5d..0x8f61  (4 bytes)
-DATA_texto_vidas:
+DATA_texto_tumbados:
 	defb 0e7h,00ah,000h,000h	; 8f5d
 
 ; ----------------------------------------------------------------------
@@ -2139,7 +2139,7 @@ vidas_pinta_va:
 	ld a,0e8h		;9077   ; ...0xE8
 	call 00056h		;9079   ; FILVRM
 	ret			;907c
-fase_pinta:		; La fase (0xE00A) como tantos dibujos de pergamino: las casillas 0x64 en la fila 0 y 0x68 en la 1, desde la columna 1
+fase_pinta:		; La fase (0xE00A) como tantos dibujos de rollo: las casillas 0x64 en la fila 0 y 0x68 en la 1, desde la columna 1
 	ld a,(0e00ah)		;907d   ; la fase...
 	ld c,a			;9080   ; ...cuantas casillas
 	ld b,000h		;9081
@@ -2388,13 +2388,13 @@ pantalla_si:
 pantalla_no:
 	ld a,0ffh		;923b   ; A = 0xFF: se mueve el sprite
 	ret			;923d
-protagonista:		; El protagonista, cada cuadro: la estrella en vuelo, el cofre (0xE1C3), la puerta de salida; lo que coge saltando; el tiempo del objeto 0x6A (0xE1B4); y, si no esta tocado, tirar (boton A), saltar (boton B) o andar
+protagonista:		; El protagonista, cada cuadro: la estrella en vuelo, el kakejiku (0xE1C3), la puerta de salida; lo que coge saltando; el tiempo del objeto 0x6A (0xE1B4); y, si no esta tocado, tirar (boton A), saltar (boton B) o andar
 	ld a,(0e19bh)		;923e   ; una estrella en vuelo?
 	and a			;9241
 	call nz,estrella		;9242   ; se mueve
-	ld a,(0e1c3h)		;9245   ; el cofre abriendose?
+	ld a,(0e1c3h)		;9245   ; el kakejiku abriendose?
 	and a			;9248
-	call nz,cofre		;9249   ; un paso
+	call nz,kakejiku		;9249   ; un paso
 	ld a,(0e1c8h)		;924c   ; la puerta de salida (0xE1C8 de 2 en adelante)?
 	cp 002h		;924f
 	jp nc,puerta_sale		;9251   ; solo eso
@@ -2597,7 +2597,7 @@ anda_der_sigue:		; Sigue el paso a la derecha: 8 puntos por casilla; al octavo, 
 	ld a,(0e198h)		;93d3   ; en una escalera?
 	and a			;93d6
 	jr nz,escalera_der		;93d7
-	ld hl,(0e18ah)		;93d9   ; la casilla de la derecha: un agujero?
+	ld hl,(0e18ah)		;93d9   ; la casilla de la derecha: un foso?
 	inc hl			;93dc
 	call casilla_para		;93dd
 	ld a,(0e19dh)		;93e0   ; la direccion
@@ -2743,7 +2743,7 @@ anda_izq_sigue:		; Sigue el paso a la izquierda: al octavo, la casilla siguiente
 	ld a,(0e198h)		;94f1   ; en una escalera?
 	and a			;94f4
 	jr nz,escalera_izq		;94f5
-	ld hl,(0e18ah)		;94f7   ; la casilla de la izquierda: un agujero?
+	ld hl,(0e18ah)		;94f7   ; la casilla de la izquierda: un foso?
 	dec hl			;94fa
 	call casilla_para		;94fb
 	ld a,(0e19dh)		;94fe   ; la direccion
@@ -3179,7 +3179,7 @@ salto_baja_lento:
 	jr z,salto_coge		;9838
 	inc (ix+000h)		;983a   ; un punto abajo
 	inc (ix+004h)		;983d
-salto_coge:		; Arriba: el cofre (0x61, cinco filas por encima) empieza a abrirse; el objeto 0x6A (cuatro filas por encima) se coge: 0xE1B4 y 100 puntos
+salto_coge:		; Arriba: el kakejiku (0x61, cinco filas por encima) empieza a abrirse; el objeto 0x6A (cuatro filas por encima) se coge: 0xE1B4 y 100 puntos
 	ld hl,(0e18ah)		;9840   ; la casilla del protagonista
 	ld a,(0e197h)		;9843   ; (estas comparaciones no cambian nada: todos los caminos llegan a 0x9858 igual)
 	and a			;9846
@@ -3201,8 +3201,8 @@ salto_coge_casilla:
 	and a			;985f
 	sbc hl,de		;9860   ; ...por encima
 	ld a,(hl)			;9862
-	cp 061h		;9863   ; el cofre (0x61)?
-	jr z,salto_cofre		;9865
+	cp 061h		;9863   ; el kakejiku (0x61)?
+	jr z,salto_kakejiku		;9865
 	ld de,(0e1ceh)		;9867   ; una fila mas abajo
 	add hl,de			;986b
 	ld a,(hl)			;986c
@@ -3218,10 +3218,10 @@ salto_coge_casilla:
 	ld a,001h		;9882   ; ...100 puntos
 	call puntos_centenas		;9884
 	jp salto_lado		;9887
-salto_cofre:		; El cofre empieza a abrirse: 0xE1C3 = 1, 0xE192 = 1 y donde esta (0xE1C5)
-	xor a			;988a   ; la cuenta del cofre a 0
+salto_kakejiku:		; El kakejiku empieza a abrirse: 0xE1C3 = 1, 0xE192 = 1 y donde esta (0xE1C5)
+	xor a			;988a   ; la cuenta del kakejiku a 0
 	ld (0e1c4h),a		;988b
-	inc a			;988e   ; el cofre en marcha
+	inc a			;988e   ; el kakejiku en marcha
 	ld (0e1c3h),a		;988f
 	ld (0e192h),a		;9892
 	ld (0e1c5h),hl		;9895   ; donde
@@ -3292,7 +3292,7 @@ salto_fin:
 salto_fin_sitio:
 	xor a			;9925
 	ld (0e194h),a		;9926
-	call casilla_para		;9929   ; un agujero?
+	call casilla_para		;9929   ; un foso?
 salto_fin_todo:
 	xor a			;992c   ; se acaba el salto
 	ld (0e194h),a		;992d
@@ -3580,7 +3580,7 @@ mapa_piezas_tabla:
 	inc hl			;9b14
 	ld d,(hl)			;9b15
 	call pieza_lista_de		;9b16
-mapa_piezas1:		; La clase 1: 3 x 3 de 0xBE0D
+mapa_piezas1:		; La clase 1: las ventanas redondas, 3 x 3 de 0xBE0D
 	call pieza1		;9b19   ; una pieza
 	ld a,(0e1c2h)		;9b1c   ; quedan?
 	dec a			;9b1f   ; una menos
@@ -3589,7 +3589,7 @@ mapa_piezas1:		; La clase 1: 3 x 3 de 0xBE0D
 	ld de,(0e1c0h)		;9b25   ; la direccion siguiente
 	call pieza_dir		;9b29
 	jr mapa_piezas1		;9b2c
-mapa_piezas2:		; La clase 2: 3 x 3 de 0xBE36
+mapa_piezas2:		; La clase 2: los altarcitos, 3 x 3 de 0xBE36
 	call pieza_lista		;9b2e   ; la lista siguiente
 mapa_piezas2_una:
 	call pieza2		;9b31   ; una pieza
@@ -3600,7 +3600,7 @@ mapa_piezas2_una:
 	ld de,(0e1c0h)		;9b3d
 	call pieza_dir		;9b41   ; la direccion siguiente
 	jr mapa_piezas2_una		;9b44
-mapa_piezas3:		; La clase 3: 4 x 4 de 0xBE16
+mapa_piezas3:		; La clase 3: los kakejiku, 4 x 4 de 0xBE16
 	call pieza_lista		;9b46   ; la lista siguiente
 mapa_piezas3_una:
 	call pieza3		;9b49   ; una pieza
@@ -3611,7 +3611,7 @@ mapa_piezas3_una:
 	ld de,(0e1c0h)		;9b55
 	call pieza_dir		;9b59   ; la direccion siguiente
 	jr mapa_piezas3_una		;9b5c
-mapa_piezas4:		; La clase 4: 4 x 4 de 0xBE26
+mapa_piezas4:		; La clase 4: las puertas, 4 x 4 de 0xBE26
 	call pieza_lista		;9b5e   ; la lista siguiente
 mapa_piezas4_una:
 	call pieza4		;9b61   ; una pieza
@@ -3755,7 +3755,7 @@ pieza4:		; 4 x 4 casillas de 0xBE26
 	ld de,0be26h		;9c3c   ; la puerta
 	jr pieza4x4		;9c3f
 pieza3:		; 4 x 4 casillas de 0xBE16
-	ld de,0be16h		;9c41   ; el cofre
+	ld de,0be16h		;9c41   ; el kakejiku
 pieza4x4:
 	ld b,004h		;9c44   ; cuatro filas
 pieza4x4_fila:
@@ -3840,10 +3840,10 @@ sprites_copia:		; B sprites: 4 bytes de cada 16
 	pop bc			;9ce3
 	djnz sprites_copia		;9ce4
 	ret			;9ce6
-casilla_para:		; La casilla del mapa en HL y las de arriba (DE = el ancho): el agujero (0x6C) tumba al protagonista si no salta (0xE183 = 5, cae); las de 0x30-0x7F que paran devuelven la casilla en A
+casilla_para:		; La casilla del mapa en HL y las de arriba (DE = el ancho): el foso (0x6C) tumba al protagonista si no salta (0xE183 = 5, cae); las de 0x30-0x7F que paran devuelven la casilla en A
 	ld a,(hl)			;9ce7   ; la casilla
 	ld b,a			;9ce8
-	cp 06ch		;9ce9   ; el agujero (0x6C)?
+	cp 06ch		;9ce9   ; el foso (0x6C)?
 	jr z,casilla_6c		;9ceb
 	and 0f0h		;9ced   ; la clase (mitad alta)
 	cp 050h		;9cef   ; 0x5x o 0x3x: para
@@ -3877,7 +3877,7 @@ casilla_6c:
 casilla_para_si:
 	ld a,(hl)			;9d20
 	ret			;9d21
-presentacion:		; La presentacion de CASIO: el logotipo crece desde el centro (0xE1BA de 1 a 20, cada 3 cuadros), la musica 4 y espera 128 cuadros o el boton
+presentacion:		; La presentacion: cuatro CASIO entran por la izquierda, la derecha, arriba y abajo y se juntan en el centro (filas 11 y 12), un paso cada 3 cuadros (0xE1BA de 1 a 20); despues la musica 4 y 128 cuadros o el boton
 	ld a,001h		;9d22   ; el paso 1
 	ld (0e1bah),a		;9d24
 	ld hl,0180ch		;9d27   ; 0x180C y 0x1AEC: donde van las dos lineas de arriba y de abajo
@@ -3927,7 +3927,7 @@ presentacion_fin:
 	call sonido_pide_calla		;9d81   ; el sonido callado
 	call pantalla_borra		;9d84   ; y la pantalla en blanco
 	ret			;9d87
-presentacion_lineas:		; Desde el paso 9: una fila del logotipo (0xA948 la de abajo, 0xA93F la de arriba) que baja desde arriba y otra que sube desde abajo, con una fila en blanco (0xBF59) detras
+presentacion_lineas:		; Desde el paso 9: los CASIO de arriba y de abajo, una fila del logotipo cada uno (0xA948 la de abajo, 0xA93F la de arriba) con una fila en blanco (0xBF59) detras, que bajan y suben hacia el centro
 	ld a,(0e1bah)		;9d88   ; el paso 9 o mas?
 	cp 009h		;9d8b
 	ret c			;9d8d
@@ -3966,7 +3966,7 @@ presentacion_lineas:		; Desde el paso 9: una fila del logotipo (0xA948 la de aba
 	ld bc,00008h		;9dde
 	call 0005ch		;9de1
 	ret			;9de4
-presentacion_crece:		; El logotipo crece desde el centro (fila 12-13, columna 0): el paso (como mucho 9) es cuantas casillas se ven de cada mitad
+presentacion_crece:		; Los dos CASIO de los lados en las filas 11 y 12: el de la derecha entra casilla a casilla desde el borde (tantas como el paso, 9 como mucho) y el de la izquierda desde el otro borde, leido desde el final
 	ld a,(0e1bah)		;9de5   ; el paso
 	ld c,a			;9de8
 	cp 009h		;9de9   ; ...no mas de 9
@@ -4120,7 +4120,7 @@ DATA_mapa1_rle:
 ; ======================================================================
 
 
-cofre:		; El cofre (0x61) abriendose, un paso cada 3 cuadros (0xE1C3 de 1 a 4): en el primero se decide que sale (0xE1BF) y, si es 0 o 1, se abre un agujero (casillas 0x6C) en el piso; luego cuatro dibujos de 4 x 4 y el efecto
+kakejiku:		; El kakejiku (el cuadro colgado; 0x61 es su cordon) que se enrolla, un paso cada 3 cuadros (0xE1C3 de 1 a 4): en el primero se decide que sale (0xE1BF) y, si es 0 o 1, se abre un foso (casillas 0x6C) en el piso; luego cuatro dibujos de 4 x 4 y el efecto
 	ld a,(0e1c4h)		;9fd5   ; cada 3 cuadros
 	inc a			;9fd8
 	ld (0e1c4h),a		;9fd9
@@ -4130,49 +4130,49 @@ cofre:		; El cofre (0x61) abriendose, un paso cada 3 cuadros (0xE1C3 de 1 a 4): 
 	ld (0e1c4h),a		;9fe0
 	ld a,(0e1c3h)		;9fe3   ; el primer paso?
 	cp 001h		;9fe6
-	jr nz,cofre_dibujo		;9fe8
-	ld a,(0e1cah)		;9fea   ; un cofre mas abierto (0xE1CA)
+	jr nz,kakejiku_dibujo		;9fe8
+	ld a,(0e1cah)		;9fea   ; un kakejiku mas (0xE1CA)
 	inc a			;9fed
 	ld (0e1cah),a		;9fee
 	ld hl,0e1cah		;9ff1
-	ld a,(0e00ah)		;9ff4   ; el cofre que da la 2 en cada fase: el 10 en la fase 2...
+	ld a,(0e00ah)		;9ff4   ; el que da la 2 (el rollo) es el ultimo de la fase: el 10 en la fase 2...
 	cp 002h		;9ff7
-	jr nz,cofre_fase3		;9ff9
+	jr nz,kakejiku_fase3		;9ff9
 	ld a,00ah		;9ffb
-	jr cofre_cual		;9ffd
-cofre_fase3:
+	jr kakejiku_cual		;9ffd
+kakejiku_fase3:
 	cp 003h		;9fff
-	jr nz,cofre_fase4		;a001
+	jr nz,kakejiku_fase4		;a001
 	ld a,012h		;a003   ; ...el 18 en la 3...
-	jr cofre_cual		;a005
-cofre_fase4:
+	jr kakejiku_cual		;a005
+kakejiku_fase4:
 	cp 004h		;a007
-	jr nz,cofre_fase5		;a009
+	jr nz,kakejiku_fase5		;a009
 	ld a,014h		;a00b   ; ...el 20 en la 4...
-	jr cofre_cual		;a00d
-cofre_fase5:
+	jr kakejiku_cual		;a00d
+kakejiku_fase5:
 	ld a,009h		;a00f   ; ...y el 9 en la 5
-cofre_cual:
+kakejiku_cual:
 	cp (hl)			;a011   ; es ese?
-	jr nz,cofre_azar		;a012
+	jr nz,kakejiku_azar		;a012
 	ld a,002h		;a014   ; si: sale la 2
-	jr cofre_sale		;a016
-cofre_azar:
+	jr kakejiku_sale		;a016
+kakejiku_azar:
 	ld a,r		;a018   ; si no, al azar: 0-3...
 	ld c,a			;a01a
 	and 003h		;a01b
 	cp 002h		;a01d   ; ...el 2 no vale: 0 o 1 segun otro bit
-	jr nz,cofre_sale		;a01f
+	jr nz,kakejiku_sale		;a01f
 	ld a,c			;a021
 	and 004h		;a022
 	rrca			;a024
 	rrca			;a025
-cofre_sale:
+kakejiku_sale:
 	ld (0e1bfh),a		;a026   ; lo que sale
 	ld a,(0e1bfh)		;a029
-	cp 002h		;a02c   ; 0 o 1: el agujero
-	jr nc,cofre_dibujo		;a02e
-	ld b,005h		;a030   ; cinco filas mas abajo del cofre
+	cp 002h		;a02c   ; 0 o 1: el foso
+	jr nc,kakejiku_dibujo		;a02e
+	ld b,005h		;a030   ; cinco filas mas abajo del kakejiku
 	call filas_por_ancho		;a032
 	ld hl,(0e1c5h)		;a035
 	add hl,de			;a038
@@ -4180,70 +4180,70 @@ cofre_sale:
 	ld e,a			;a03c
 	ld d,000h		;a03d
 	ld b,a			;a03f
-cofre_suelo:		; Busca en esa fila un tramo de casillas 0xB0 (el piso) tan largo como la fase, hacia un lado al azar, y lo llena de agujero (0x6C)
+kakejiku_suelo:		; Busca en esa fila un tramo de casillas 0xB0 (el piso) tan largo como la fase, hacia un lado al azar, y lo llena de foso (0x6C)
 	ld a,(hl)			;a040   ; el piso (0xB0)?
 	cp 0b0h		;a041
-	jr nz,cofre_suelo_otro		;a043
+	jr nz,kakejiku_suelo_otro		;a043
 	inc hl			;a045
-	djnz cofre_suelo		;a046
-	jr cofre_suelo_pon		;a048
-cofre_suelo_otro:
+	djnz kakejiku_suelo		;a046
+	jr kakejiku_suelo_pon		;a048
+kakejiku_suelo_otro:
 	ld b,e			;a04a
 	bit 0,c		;a04b   ; hacia la derecha o la izquierda
-	jr z,cofre_suelo_izq		;a04d
+	jr z,kakejiku_suelo_izq		;a04d
 	inc hl			;a04f
-	jr cofre_suelo		;a050
-cofre_suelo_izq:
+	jr kakejiku_suelo		;a050
+kakejiku_suelo_izq:
 	and a			;a052
 	sbc hl,de		;a053
-	jr cofre_suelo		;a055
-cofre_suelo_pon:
+	jr kakejiku_suelo		;a055
+kakejiku_suelo_pon:
 	and a			;a057
 	sbc hl,de		;a058
 	ld b,e			;a05a
-cofre_suelo_6c:
+kakejiku_suelo_6c:
 	ld (hl),06ch		;a05b   ; 0x6C
 	inc hl			;a05d
-	djnz cofre_suelo_6c		;a05e
-cofre_dibujo:		; El dibujo del paso: los de 0xA110 (sale 0), 0xA150 (1), 0xA0D0 (2) o 0xBF61 (3), 16 bytes por paso
+	djnz kakejiku_suelo_6c		;a05e
+kakejiku_dibujo:		; El dibujo del paso: los de 0xA110 (sale 0), 0xA150 (1), 0xA0D0 (2) o 0xBF61 (3), 16 bytes por paso
 	ld a,(0e1bfh)		;a060   ; lo que sale
 	and a			;a063
-	jr z,cofre_dib0		;a064
+	jr z,kakejiku_dib0		;a064
 	cp 001h		;a066
-	jr z,cofre_dib1		;a068
+	jr z,kakejiku_dib1		;a068
 	cp 002h		;a06a
-	jr z,cofre_dib2		;a06c
+	jr z,kakejiku_dib2		;a06c
 	ld hl,0bf61h		;a06e   ; 3: 0xBF61
-	jr cofre_dib_paso		;a071
-cofre_dib0:
+	jr kakejiku_dib_paso		;a071
+kakejiku_dib0:
 	ld hl,0a110h		;a073   ; 0: 0xA110
-	jr cofre_dib_paso		;a076
-cofre_dib1:
+	jr kakejiku_dib_paso		;a076
+kakejiku_dib1:
 	ld hl,0a150h		;a078   ; 1: 0xA150
-	jr cofre_dib_paso		;a07b
-cofre_dib2:
+	jr kakejiku_dib_paso		;a07b
+kakejiku_dib2:
 	ld hl,0a0d0h		;a07d   ; 2: 0xA0D0
-cofre_dib_paso:
+kakejiku_dib_paso:
 	ld a,(0e1c3h)		;a080   ; + (paso - 1) x 16
 	dec a			;a083
-	jr z,cofre_pinta		;a084
+	jr z,kakejiku_pinta		;a084
 	ld b,a			;a086
 	ld de,00010h		;a087
-cofre_dib_suma:
+kakejiku_dib_suma:
 	add hl,de			;a08a
-	djnz cofre_dib_suma		;a08b
-cofre_pinta:		; 4 x 4 casillas en el mapa, donde esta el cofre (0xE1C5)
+	djnz kakejiku_dib_suma		;a08b
+kakejiku_pinta:		; 4 x 4 casillas en el mapa, donde esta el kakejiku (0xE1C5)
 	ex de,hl			;a08d
 	ld hl,(0e1c5h)		;a08e   ; donde esta
 	ld c,004h		;a091   ; cuatro filas
-cofre_pinta_fila:
+kakejiku_pinta_fila:
 	ld b,004h		;a093
-cofre_pinta_casilla:
+kakejiku_pinta_casilla:
 	ld a,(de)			;a095
 	ld (hl),a			;a096
 	inc hl			;a097
 	inc de			;a098
-	djnz cofre_pinta_casilla		;a099
+	djnz kakejiku_pinta_casilla		;a099
 	push de			;a09b   ; la fila siguiente (el ancho - 4)
 	ld de,(0e1ceh)		;a09c
 	ld a,e			;a0a0
@@ -4252,7 +4252,7 @@ cofre_pinta_casilla:
 	add hl,de			;a0a4
 	pop de			;a0a5
 	dec c			;a0a6
-	jr nz,cofre_pinta_fila		;a0a7
+	jr nz,kakejiku_pinta_fila		;a0a7
 	ld a,(0e1c3h)		;a0a9   ; el paso siguiente
 	inc a			;a0ac
 	ld (0e1c3h),a		;a0ad
@@ -4260,54 +4260,57 @@ cofre_pinta_casilla:
 	ret c			;a0b2
 	ld a,(0e1bfh)		;a0b3   ; lo que salio: 0 o 1, el efecto 6
 	cp 002h		;a0b6
-	jr nc,cofre_efecto2		;a0b8
+	jr nc,kakejiku_efecto2		;a0b8
 	ld a,006h		;a0ba
-	jr cofre_fin		;a0bc
-cofre_efecto2:
+	jr kakejiku_fin		;a0bc
+kakejiku_efecto2:
 	cp 002h		;a0be   ; 2: el efecto 4
-	jr nz,cofre_efecto3		;a0c0
+	jr nz,kakejiku_efecto3		;a0c0
 	ld a,004h		;a0c2
-	jr cofre_fin		;a0c4
-cofre_efecto3:
+	jr kakejiku_fin		;a0c4
+kakejiku_efecto3:
 	ld a,005h		;a0c6   ; 3: el efecto 5
-cofre_fin:
+kakejiku_fin:
 	call efecto_pide		;a0c8   ; el efecto
-	xor a			;a0cb   ; el cofre, acabado
+	xor a			;a0cb   ; el kakejiku, acabado
 	ld (0e1c3h),a		;a0cc
 	ret			;a0cf
 
 ; ----------------------------------------------------------------------
-; DATOS cofre_dib2_tabla: El cofre que da la 2 (el que toca en cada fase):
-;   cuatro pasos de 4 x 4 casillas
+; DATOS kakejiku_dib2_tabla: El kakejiku que da el rollo (el ultimo de la
+;   fase): cuatro pasos de 4 x 4 casillas; detras, el rollo secreto (0x64 y
+;   0x68)
 ;   0xa0d0..0xa110  (64 bytes)
-DATA_cofre_dib2_tabla:
+DATA_kakejiku_dib2_tabla:
 	defb 063h,0a1h,0a2h,0a3h,063h,0a5h,0a6h,0a7h,062h,0a5h,0a6h,0a7h,0a0h,0a9h,0a4h,0a8h	; a0d0  c...c...b.......
 	defb 063h,0a1h,0a2h,0a3h,063h,0a5h,0a6h,0a7h,063h,0a9h,0a4h,0a8h,062h,0a0h,049h,0a0h	; a0e0  c...c...c...b.I.
 	defb 063h,0a1h,0a2h,0a3h,063h,0a9h,0a4h,0a8h,063h,04ah,068h,048h,062h,0a0h,049h,0a0h	; a0f0  c...c...cJhHb.I.
 	defb 063h,0cch,0cdh,0ceh,063h,04ah,064h,048h,063h,04ah,068h,048h,062h,0a0h,049h,0a0h	; a100  c...cJdHcJhHb.I.
 
 ; ----------------------------------------------------------------------
-; DATOS cofre_dib0_tabla: El cofre 0: cuatro pasos de 4 x 4 casillas
+; DATOS kakejiku_dib0_tabla: El kakejiku 0: cuatro pasos de 4 x 4 casillas;
+;   detras sale un esqueleto (0x95-0x9F) y se abre el foso
 ;   0xa110..0xa150  (64 bytes)
-DATA_cofre_dib0_tabla:
+DATA_kakejiku_dib0_tabla:
 	defb 063h,0a1h,0a2h,0a3h,063h,0a5h,0a6h,0a7h,062h,0a5h,0aah,0a7h,0a0h,0a9h,0a4h,0a8h	; a110  c...c...b.......
 	defb 063h,0a1h,0a2h,0a3h,063h,0a5h,0a6h,0a7h,063h,0a9h,0a4h,0a8h,062h,09dh,09eh,09fh	; a120  c...c...c...b...
 	defb 063h,0a1h,0a2h,0a3h,063h,0a9h,0a4h,0a8h,063h,099h,09ah,09bh,062h,09dh,09eh,09fh	; a130  c...c...c...b...
 	defb 063h,0cch,0cdh,0ceh,063h,095h,096h,097h,063h,099h,09ah,09bh,062h,09dh,09eh,09fh	; a140  c...c...c...b...
 
 ; ----------------------------------------------------------------------
-; DATOS cofre_dib1_tabla: El cofre 1: cuatro pasos de 4 x 4
+; DATOS kakejiku_dib1_tabla: El kakejiku 1: cuatro pasos de 4 x 4; detras, una
+;   llama blanca (0x94, 0x98, 0x9C) y el foso
 ;   0xa150..0xa190  (64 bytes)
-DATA_cofre_dib1_tabla:
+DATA_kakejiku_dib1_tabla:
 	defb 063h,0a1h,0a2h,0a3h,063h,0a5h,0a6h,0a7h,062h,0a5h,0aah,0a7h,0a0h,0a9h,0a4h,0a8h	; a150  c...c...b.......
 	defb 063h,0a1h,0a2h,0a3h,063h,0a5h,0a6h,0a7h,063h,0a9h,0a4h,0a8h,062h,0a0h,09ch,0a0h	; a160  c...c...c...b...
 	defb 063h,0a1h,0a2h,0a3h,063h,0a9h,0a4h,0a8h,063h,0a0h,098h,0a0h,062h,0a0h,09ch,0a0h	; a170  c...c...c...b...
 	defb 063h,0cch,0cdh,0ceh,063h,0a0h,094h,0a0h,063h,0a0h,098h,0a0h,062h,0a0h,09ch,0a0h	; a180  c...c...c...b...
 
 ; ----------------------------------------------------------------------
-; DATOS relleno_a190: 128 bytes sin lectura: 19 de casillas como las del cofre
-;   y luego 0xFB 0x00 / 0xFF 0x00 alternados; los dibujos del cofre acaban en
-;   0xA18F (el paso 4 de 0xA150)
+; DATOS relleno_a190: 128 bytes sin lectura: 19 de casillas como las del
+;   kakejiku y luego 0xFB 0x00 / 0xFF 0x00 alternados; los dibujos del
+;   kakejiku acaban en 0xA18F (el paso 4 de 0xA150)
 ;   0xa190..0xa210  (128 bytes)
 DATA_relleno_a190:
 	defb 0a0h,09ch,0a0h,063h,0cch,0cdh,0ceh,063h,0a0h,094h,0a0h,063h,0a0h,098h,0a0h,062h	; a190  ...c...c...c...b
@@ -5278,7 +5281,7 @@ DATA_casillas_colores:
 ; ======================================================================
 
 
-salto_objetos:		; Saltando (0xE194, sin 0xE192): la casilla 0x86 cuatro filas por encima del protagonista se borra (tres filas) y da 100 puntos; el pergamino (0x64) da 500 y abre el camino de la puerta (0xE1C8 = 1)
+salto_objetos:		; Saltando (0xE194, sin 0xE192): la casilla 0x86 cuatro filas por encima del protagonista se borra (tres filas) y da 100 puntos; el rollo (0x64) da 500 y abre el camino de la puerta (0xE1C8 = 1)
 	ld a,(0e194h)		;b600   ; saltando?
 	and a			;b603
 	jr z,puerta_llega		;b604
@@ -5292,7 +5295,7 @@ salto_objetos:		; Saltando (0xE194, sin 0xE192): la casilla 0x86 cuatro filas po
 	sbc hl,de		;b615
 	ld a,(hl)			;b617   ; 0x86?
 	cp 086h		;b618
-	jr nz,salto_pergamino		;b61a
+	jr nz,salto_rollo		;b61a
 	ld (hl),0a0h		;b61c   ; borrada (0xA0)...
 	ld de,(0e1ceh)		;b61e   ; ...tres filas
 	add hl,de			;b622
@@ -5301,11 +5304,11 @@ salto_objetos:		; Saltando (0xE194, sin 0xE192): la casilla 0x86 cuatro filas po
 	ld (hl),0a0h		;b626
 	ld a,(0e000h)		;b628   ; en partida...
 	and a			;b62b
-	jr z,salto_pergamino		;b62c
+	jr z,salto_rollo		;b62c
 	ld a,001h		;b62e   ; ...100 puntos
 	call puntos_centenas		;b630
-salto_pergamino:
-	ld a,(0e1c8h)		;b633   ; ya tiene el pergamino?
+salto_rollo:
+	ld a,(0e1c8h)		;b633   ; ya tiene el rollo?
 	and a			;b636
 	jr nz,puerta_llega		;b637
 	ld a,(0e192h)		;b639   ; 0xE192?
@@ -5316,7 +5319,7 @@ salto_pergamino:
 	ld hl,(0e18ah)		;b644
 	and a			;b647
 	sbc hl,de		;b648
-	ld a,(hl)			;b64a   ; el pergamino (0x64)?
+	ld a,(hl)			;b64a   ; el rollo (0x64)?
 	cp 064h		;b64b
 	ret nz			;b64d
 	ld a,001h		;b64e   ; cogido: 0xE1C8 = 1
@@ -5328,8 +5331,8 @@ salto_pergamino:
 	ld a,005h		;b65c   ; 500 puntos
 	call puntos_centenas		;b65e
 	ret			;b661
-puerta_llega:		; Con el pergamino (0xE1C8 = 1): si el protagonista llega a la puerta de la fase (la casilla 0x81, en 0xEB1A, 0xEAC4, 0xEADC o 0xE865), 0xE1C8 = 2 y se abre
-	ld a,(0e1c8h)		;b662   ; con el pergamino?
+puerta_llega:		; Con el rollo (0xE1C8 = 1): si el protagonista llega a la puerta de la fase (la casilla 0x81, en 0xEB1A, 0xEAC4, 0xEADC o 0xE865), 0xE1C8 = 2 y se abre
+	ld a,(0e1c8h)		;b662   ; con el rollo?
 	cp 001h		;b665
 	ret nz			;b667
 	ld b,004h		;b668   ; cuatro filas por encima
@@ -5623,9 +5626,10 @@ DATA_sprites_dibujos_d:
 
 ; ----------------------------------------------------------------------
 ; DATOS piezas_casillas: Las casillas de las piezas del mapa: 0xBE00 (0x40, el
-;   muro), las escaleras (0xBE01-0xBE0C), 3 x 3 de 0xBE0D, 4 x 4 del cofre
-;   (0xBE16, el 0x61 arriba a la izquierda), 4 x 4 de la puerta (0xBE26) y 3 x
-;   3 con el objeto 0x6A (0xBE36)
+;   muro), las escaleras (0xBE01-0xBE0C), la ventana redonda (3 x 3, 0xBE0D),
+;   el kakejiku (4 x 4, 0xBE16, el cordon 0x61 arriba a la izquierda), la
+;   puerta (4 x 4, 0xBE26) y el altarcito (3 x 3, 0xBE36, con el objeto 0x6A
+;   en el centro)
 ;   0xbe00..0xbe3f  (63 bytes)
 DATA_piezas_casillas:
 	defb 040h,031h,032h,033h,03eh,03ah,03bh,034h,035h,036h,038h,039h,03dh,070h,071h,072h	; be00  @123>:;45689=pqr
@@ -5677,9 +5681,10 @@ DATA_fila_blanco:
 	defb 010h,010h,010h,010h,010h,010h,010h,010h	; bf59  ........
 
 ; ----------------------------------------------------------------------
-; DATOS cofre_dib3_tabla: El cofre 3: cuatro pasos de 4 x 4
+; DATOS kakejiku_dib3_tabla: El kakejiku 3: cuatro pasos de 4 x 4; detras, el
+;   premio 0x86 (100 puntos si se le da saltando)
 ;   0xbf61..0xbfa1  (64 bytes)
-DATA_cofre_dib3_tabla:
+DATA_kakejiku_dib3_tabla:
 	defb 063h,0a1h,0a2h,0a3h,063h,0a5h,0a6h,0a7h,062h,0a5h,0aah,0a7h,0a0h,0a9h,0a4h,0a8h	; bf61  c...c...b.......
 	defb 063h,0a1h,0a2h,0a3h,063h,0a5h,0a6h,0a7h,063h,0a9h,0a4h,0a8h,062h,0a0h,08fh,0a0h	; bf71  c...c...c...b...
 	defb 063h,0a1h,0a2h,0a3h,063h,0a9h,0a4h,0a8h,063h,0a0h,087h,0a0h,062h,0a0h,08fh,0a0h	; bf81  c...c...c...b...
