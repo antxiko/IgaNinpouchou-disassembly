@@ -28,13 +28,13 @@ C 0x814F en 0xE00B
 C 0x8152 los puntos (0xE001-0xE006) a cero
 C 0x8155 seis cifras
 L 0x8157 partida_borra
-L 0x8406 cerca_y                   ¿Toca en Y? A = la Y de IY menos la del protagonista (IX): C si queda entre B y C (con signo, de B a C)
+L 0x8406 cerca_y                   ¿Toca en Y? A = la Y de IY menos la del protagonista (IX): C (toca) si, con signo, queda entre C - 0x100 y B - 1 (B, el margen por un lado; C, 0x100 menos el del otro)
 C 0x8406 la Y del otro...
 C 0x8409 ...menos la del protagonista
 L 0x840C cerca_mira
-C 0x840C por debajo de B: no
-C 0x840E por debajo de C: si
-C 0x8411 C: toca
+C 0x840C menos que B (de 0 a B - 1): toca
+C 0x840E C o mas (de C - 0x100 a -1)?
+C 0x8411 si: toca (C)
 L 0x8413 cerca_no
 C 0x8413 NC: no
 L 0x8415 cerca_x                   Lo mismo en X

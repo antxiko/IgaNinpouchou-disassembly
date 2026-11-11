@@ -527,15 +527,15 @@ otro_borra_byte:
 	djnz otro_borra_byte		;83ff
 	ld (iy+000h),0ech		;8401   ; fuera (Y 0xEC)
 	ret			;8405
-cerca_y:		; ¿Toca en Y? A = la Y de IY menos la del protagonista (IX): C si queda entre B y C (con signo, de B a C)
+cerca_y:		; ¿Toca en Y? A = la Y de IY menos la del protagonista (IX): C (toca) si, con signo, queda entre C - 0x100 y B - 1 (B, el margen por un lado; C, 0x100 menos el del otro)
 	ld a,(iy+000h)		;8406   ; la Y del otro...
 	sub (ix+000h)		;8409   ; ...menos la del protagonista
 cerca_mira:
-	cp b			;840c   ; por debajo de B: no
+	cp b			;840c   ; menos que B (de 0 a B - 1): toca
 	ret c			;840d
-	cp c			;840e   ; por debajo de C: si
+	cp c			;840e   ; C o mas (de C - 0x100 a -1)?
 	jr c,cerca_no		;840f
-	scf			;8411   ; C: toca
+	scf			;8411   ; si: toca (C)
 	ret			;8412
 cerca_no:
 	and a			;8413   ; NC: no
