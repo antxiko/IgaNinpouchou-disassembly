@@ -51,8 +51,8 @@ nine, `puntos`, 0x90AE).
 
 ## The points
 
-- An enemy knocked down, **5**; on stage 1, or the one that shoots arrows, **10** (`tipo3_puntos`, 0x87F0).
-- The arrow one, when it starts jumping at the ninja and falls into a pit, **100** (`tipo3_estado4`, 0x8955).
+- An enemy knocked down, **5**; on stage 1, or type 8, the one that throws balls, **10** (`tipo3_puntos`, 0x87F0).
+- Type 8, when it starts jumping at the ninja and falls into a pit, **100** (`tipo3_estado4`, 0x8955).
 - The prize left behind some kakejiku, and the object on the little shrines, **100** each, if hit jumping.
 - The **secret scroll**, **500** (`salto_rollo`, 0xB633).
 - At the end of a stage, each unit of TIME left is worth as many points as enemies knocked down on the stage (at

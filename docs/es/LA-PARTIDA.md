@@ -51,8 +51,8 @@ nueve, `puntos`, 0x90AE).
 
 ## Los puntos
 
-- Un enemigo tumbado, **5**; en la fase 1 o el que dispara flechas, **10** (`tipo3_puntos`, 0x87F0).
-- El de las flechas, cuando se pone a saltar hacia el ninja y cae a un foso, **100** (`tipo3_estado4`, 0x8955).
+- Un enemigo tumbado, **5**; en la fase 1 o el tipo 8, el que tira bolas, **10** (`tipo3_puntos`, 0x87F0).
+- El tipo 8, cuando se pone a saltar hacia el ninja y cae a un foso, **100** (`tipo3_estado4`, 0x8955).
 - El premio que queda detrás de algunos kakejiku, y el objeto de los altarcitos, **100** cada uno, si se les da
   saltando.
 - El **rollo secreto**, **500** (`salto_rollo`, 0xB633).

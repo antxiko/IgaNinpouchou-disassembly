@@ -84,13 +84,13 @@ its own thing by its type (`otro`, 0x844F):
 
 | type | what it does |
 |---|---|
-| 1 | crosses the screen from side to side, 3 dots per frame, at the height of a floor or of the ninja |
+| 1 | an arrow: crosses the screen from side to side, 3 dots per frame, at the height of a floor or of the ninja |
 | 2 | crosses one dot at a time, changing colour |
 | 3 | a ninja that walks along a floor, turns back at walls and pits and throws stars |
-| 8 | from stage 3, instead of type 3: shoots arrows, and in some columns starts blinking and then jumps at the ninja |
+| 8 | from stage 3, instead of type 3: throws balls, and in some columns starts blinking and then jumps at the ninja |
 | 5 | the ninja of stage 1, who come in from the sides in a row |
 | 6 | what falls from above on stage 1, veering towards the ninja |
-| 4 and 7 | the stars and the arrows the others throw |
+| 4 and 7 | the stars and the balls the others throw |
 
 Types 3, 5 and 8 are knocked down with the star or by jumping sideways into them; the others can only be dodged
 (on stage 2 with the shrine's object, the star also takes types 1 and 2 away).

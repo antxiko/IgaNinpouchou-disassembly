@@ -82,13 +82,13 @@ cada uno hace lo suyo según su tipo (`otro`, 0x844F):
 
 | tipo | qué hace |
 |---|---|
-| 1 | cruza la pantalla de lado a lado, 3 puntos por cuadro, a la altura de un piso o del ninja |
+| 1 | una flecha: cruza la pantalla de lado a lado, 3 puntos por cuadro, a la altura de un piso o del ninja |
 | 2 | cruza de punto en punto cambiando de color |
 | 3 | un ninja que anda por un piso, da la vuelta en los muros y los fosos y tira estrellas |
-| 8 | desde la fase 3, en lugar del 3: tira flechas, y en unas columnas se pone a parpadear y luego salta hacia el ninja |
+| 8 | desde la fase 3, en lugar del 3: tira bolas, y en unas columnas se pone a parpadear y luego salta hacia el ninja |
 | 5 | los ninja de la fase 1, que salen por los lados en una fila |
 | 6 | lo que cae desde arriba en la fase 1, torciendo hacia el ninja |
-| 4 y 7 | las estrellas y las flechas que tiran los otros |
+| 4 y 7 | las estrellas y las bolas que tiran los otros |
 
 Los tipos 3, 5 y 8 se tumban con la estrella o saltándoles de lado; los demás solo hay que esquivarlos (en la
 fase 2 con el objeto del altarcito, la estrella también se lleva a los tipos 1 y 2).
