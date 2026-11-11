@@ -1,0 +1,4 @@
+# Zonas que NO son codigo aunque el trazado pueda entrar en ellas.
+
+# La cabecera: "AB", INIT, STATEMENT, DEVICE, TEXT y seis reservados.
+0x8000 0x8010

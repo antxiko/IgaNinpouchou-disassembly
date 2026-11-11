@@ -1,0 +1,2444 @@
+# IGA NINPOUCHOU (Casio, 1985) - anotaciones
+L 0x8010 init                      El arranque: la pila, la interrupcion en H.TIMI, SCREEN 2, las letras de la BIOS en los tres tercios, los colores, los sprites y el titulo
+C 0x8010 sin interrupciones
+C 0x8011 DISSCR
+C 0x8014 0xE000-0xF0FF...
+C 0x8017 ...0x1100 bytes...
+L 0x801A init_borra                ...a cero
+C 0x801A un byte a 0
+C 0x801D 256 bytes...
+C 0x8020 ...17 veces
+C 0x8022 la pila
+C 0x8028 ...en H.TIMI...
+C 0x802B ...con su "jp"
+C 0x802D ...0xFD9F
+C 0x8030 SETGRP: SCREEN 2
+C 0x8033 fondo y borde negros...
+C 0x8034 BAKCLR = 0
+C 0x8037 BDRCLR = 0
+C 0x803A ...letras blancas (0xFF)
+C 0x803B FORCLR = 0xFF
+C 0x803E CHGCLR
+C 0x8056 los colores de todo a 0xF0
+C 0x8059 0x1800 bytes
+C 0x805C 0xF0: blanco sobre transparente
+C 0x805E FILVRM
+C 0x8061 los dibujos de los sprites
+C 0x814F en 0xE00B
+C 0x8152 los puntos (0xE001-0xE006) a cero
+C 0x8155 seis cifras
+L 0x8157 partida_borra
+L 0x8406 cerca_y                   ¿Toca en Y? A = la Y de IY menos la del protagonista (IX): C si queda entre B y C (con signo, de B a C)
+C 0x8406 la Y del otro...
+C 0x8409 ...menos la del protagonista
+L 0x840C cerca_mira
+C 0x840C por debajo de B: no
+C 0x840E por debajo de C: si
+C 0x8411 C: toca
+L 0x8413 cerca_no
+C 0x8413 NC: no
+L 0x8415 cerca_x                   Lo mismo en X
+C 0x8415 la X
+L 0x8DE6 tiempo_millar             Un millar menos y las de abajo a 9
+C 0x8DE6 el millar
+C 0x8DE7 y las otras a 9
+L 0x8DEB tiempo_nueve2
+L 0x8DED tiempo_nueve1
+L 0x8DF1 tiempo_centena            Una centena menos
+C 0x8DF1 la centena
+L 0x8DF6 tiempo_decena             Una decena menos
+C 0x8DF6 la decena
+L 0x8DFB tiempo_unidad             Una unidad menos
+C 0x8DFB la unidad
+L 0x8DFC tiempo_pinta              TIME en la pantalla: las cifras al reves en 0xE084 y los ceros de la izquierda, espacios (0x10)
+C 0x8DFC cuatro cifras...
+C 0x8DFE al reves...
+C 0x8E01 ...al reves...
+L 0x8E04 tiempo_copia
+C 0x8E04 una cifra
+C 0x8E05 ...en 0xE084-0xE087
+C 0x8E08 cuatro
+C 0x8E0A los ceros de la izquierda: B = 4, C = 0x10 (el espacio)
+L 0x8E0E tiempo_ceros
+C 0x8E0E 0?
+C 0x8E11 un espacio
+C 0x8E12 la siguiente
+L 0x8E15 tiempo_vram               Cuatro casillas de 0xE084...
+C 0x8E15 las cifras
+L 0x8E18 tiempo_vram_hl            ...o de HL en la fila 1, columna 18
+C 0x8E18 en la fila 1, columna 18
+L 0x8E2D tiempo_borra              Las cifras de TIME y su copia a 0
+C 0x8E2D la copia y las cifras a 0...
+C 0x8E2E la copia...
+C 0x8E37 ...y las cifras
+L 0x8E47 ram_sprites_borra
+C 0x8E47 a cero
+C 0x8E4F los sprites de la RAM...
+C 0x8E52 ...de 16 en 16...
+C 0x8E55 ...32...
+L 0x8E57 ram_sprites_fuera
+C 0x8E57 ...con la Y fuera
+L 0x8E63 pantalla_borra            La pantalla en blanco (la casilla 0x10) y los sprites fuera
+C 0x8E63 el espacio
+C 0x8E65 toda la tabla de nombres
+C 0x8E68 768 casillas
+C 0x8E6B FILVRM
+C 0x8E6E la tabla de sprites que va a la VRAM...
+C 0x8E71 ...127 bytes...
+L 0x8E73 pantalla_borra_sprites
+C 0x8E73 ...a cero
+C 0x8E78 a la VRAM
+L 0x8EC9 sprites_dibujos           Los dibujos de los sprites (0xB800, 0x800 bytes) en 0x3800
+C 0x8ECC de 0xB800...
+C 0x8ECF ...0x800 bytes
+L 0x8F74 sprites_vram              Los 32 sprites a 0x1B00, de 0xE100; antes, la tabla de la RAM (16 bytes por sprite, desde 0xE300) se pasa a 4 bytes por sprite, en otro orden
+C 0x8F74 a 0x1B00...
+C 0x8F77 ...desde 0xE100...
+C 0x8F7A ...32 sprites
+C 0x8F7D LDIRVM
+C 0x8F97 un efecto?
+C 0x8F9A sin efecto: los canales B y C a volumen 0
+C 0x8F9C ...a volumen 0
+C 0x8F9E WRTPSG
+C 0x8FA1 el C...
+C 0x8FA5 ...WRTPSG
+C 0x8FAB dieciseis cuentas...
+L 0x8FB0 interrupcion_cuenta
+C 0x8FB0 ...una mas cada una
+C 0x8FB4 en partida?
+C 0x8FB7 en partida?
+C 0x8FBD lo sostenido
+L 0x8FD9 palanca                   La palanca: los cursores o el mando 1 (GTSTCK 0 y 1), en 0xE180
+C 0x8FDA GTSTCK 0: los cursores
+C 0x8FE2 GTSTCK 1: el mando 1
+C 0x8FE9 uno u otro
+C 0x902C ...o lo del mando
+L 0x9034 boton_mando               GTTRIG A: lo recien pulsado en (DE) y lo sostenido en (HL)
+C 0x9034 GTTRIG
+L 0x9038 boton_mira
+C 0x9038 pulsado
+L 0x903A boton_suelto
+C 0x903A suelto
+L 0x903D boton_nuevo               Recien pulsado: (HL) y (DE) a 1
+C 0x903D ya estaba pulsado?
+C 0x9040 recien pulsado
+L 0x9044 boton_barra               La barra (fila 8, bit 0)
+C 0x9044 la fila 8...
+C 0x9046 SNSMAT
+C 0x9049 la barra
+L 0x904E botones_teclado           La barra como boton 1 y GRAPH (fila 6, bit 2) como boton 2
+C 0x904E la fila 8
+C 0x9053 pulsado = 1
+C 0x90AB LDIRVM
+L 0x90AE puntos                    Los puntos + A (BCD) en las unidades y decenas (0xE00E), con acarreo
+C 0x90AF + A...
+C 0x90B3 ...en BCD
+C 0x90B4 las unidades y decenas
+C 0x90B7 sin acarreo
+C 0x90B9 se lleva una
+L 0x90BB puntos_centenas           + A en las centenas y millares (0xE00D)
+C 0x90BC las centenas y millares
+C 0x90C4 sin acarreo
+C 0x90D6 se lleva una a 0xE00C
+C 0x90D9 las decenas y centenas de millar
+L 0x910D puntos_cifras             Las seis cifras sueltas de los puntos (0xE001), de los tres bytes BCD
+C 0x910D las seis cifras...
+C 0x9110 ...de los tres bytes BCD
+C 0x9113 tres bytes
+L 0x9115 puntos_cifra              Un byte: la mitad alta...
+C 0x9115 un byte
+C 0x9117 la alta
+C 0x911F la baja
+C 0x9122 la baja
+L 0x9128 record                    Si los puntos pasan del record, record nuevo
+C 0x912B ...contra los puntos
+C 0x9131 menos: nada
+C 0x914B los tres bytes...
+L 0x9CD9 sprites_copia             B sprites: 4 bytes de cada 16
+C 0x9CDA Y, X, dibujo, color
+C 0x9CDD copiados
+C 0x9CDF los otros 12 bytes, no
+C 0x9D39 cada 3 cuadros
+C 0x9D40 la cuenta a 0
+C 0x9D44 el final, si toca
+C 0x9D4F 21: se acaba
+C 0x9D53 desde el 9...
+C 0x9D57 ...la de arriba baja una fila...
+C 0x9D9B la fila de encima...
+C 0x9DA2 ...con la de arriba de CASIO
+C 0x9DAB y la de encima...
+C 0x9DB2 ...en blanco
+C 0x9DDB y una en blanco
+C 0x9DE9 ...no mas de 9
+L 0x9DEF presentacion_arriba
+C 0x9DEF en la fila 12, columna 0, menos el paso
+C 0x9DF7 la fila de arriba de CASIO...
+L 0x9E10 presentacion_abajo
+C 0x9E11 LDIRVM
+C 0x9E14 la otra mitad, desde la fila 11
+C 0x9E1F pasado el 9: se corre
+L 0x9E25 presentacion_izq
+C 0x9E26 desde el final, hacia atras
+L 0x9E2E presentacion_izq_va
+L 0xA270 efecto_pide               Pide el efecto A (0xE2C2), solo en partida: si ya hay uno, se queda el de numero mas bajo
+C 0xA270 el numero
+C 0xA271 en partida?
+C 0xA277 el efecto pedido
+L 0xA27A pide_va
+C 0xA27B ya hay uno?
+C 0xA27F el de antes es menor: se queda
+L 0xA281 pide_pon
+C 0xA281 el nuevo
+L 0xA283 musica_pide               Pide la musica A (0xE2BE), con la misma regla
+C 0xA283 la musica pedida
+L 0xA288 sonido                    El sonido de cada cuadro (desde la interrupcion): una musica nueva o un efecto nuevo empiezan; los tres canales (0xE280, 0xE292, 0xE2A4, 18 bytes) siguen
+C 0xA288 una musica sonando?
+L 0xA2BD sonido_canal_a            El canal A: su bloque a 0xE2C3, un paso y de vuelta
+C 0xA2BD la musica?
+C 0xA2C3 o un efecto que use el canal A?
+L 0xA2C9 sonido_canal_a_va
+C 0xA2C9 el canal A
+L 0xA2EB sonido_canal_b            El canal B
+C 0xA2EB la musica o un efecto?
+L 0xA2F6 sonido_canal_b_va
+C 0xA2F6 el canal B
+C 0xA2FC los registros 2 y 9
+C 0xA2FF los bits del canal B
+C 0xA306 el canal 1
+C 0xA313 3: sigue
+C 0xA318 los bits de vuelta
+C 0xA321 acabado
+C 0xA32A los registros 4 y 10
+C 0xA32D los bits del canal C
+C 0xA335 el canal 2
+C 0xA351 acabado
+L 0xA358 canal_a_trabajo           Copia el bloque del canal (HL, 18 bytes) a 0xE2C3
+C 0xA358 al canal de trabajo
+L 0xA35B copia18
+C 0xA35B 18 bytes
+L 0xA361 canal_de_trabajo          Y de vuelta a DE
+L 0xA366 canal_paso                Un paso del canal de trabajo: si la nota sigue, nada; si no, el byte siguiente de la pieza: una nota (menos de 0xF0) o una orden
+C 0xA366 la nota sigue?
+C 0xA36D su cuenta
+C 0xA371 sigue
+L 0xA372 canal_lee
+C 0xA376 por donde va
+C 0xA37A una orden?
+C 0xA37E la nota
+C 0xA387 el canal con tono, sin ruido
+L 0xA38E canal_mezcla
+C 0xA38F corrido al canal
+L 0xA397 canal_mezcla_corre
+L 0xA39A canal_mezcla_pon
+C 0xA39A el registro 7
+C 0xA3A6 0xFF: el final
+L 0xA3AD canal_orden_f7
+C 0xA3AD 0xF7: callar
+L 0xA3B4 canal_orden_fe
+C 0xA3B4 0xFE: al principio
+L 0xA3BD canal_orden_fd            0xFD n: la marca 1 y cuantas veces
+C 0xA3C1 cuantas veces...
+C 0xA3C3 ...en +5
+C 0xA3C7 la marca 1
+L 0xA3CC canal_orden_fc            0xFC: vuelve a la marca 1 si quedan
+C 0xA3D0 una vez menos
+C 0xA3D5 ya: sigue
+L 0xA3D8 canal_orden_fc_vuelve
+C 0xA3D8 a la marca 1
+L 0xA3DD canal_orden_fb            0xFB n: la marca 2
+C 0xA3E1 cuantas veces...
+C 0xA3E3 ...en +6
+C 0xA3E7 la marca 2
+L 0xA3EA canal_orden_sigue         Sigue leyendo
+C 0xA3EA por donde va
+L 0xA3EF canal_orden_fa            0xFA: vuelve a la marca 2
+C 0xA3F3 una vez menos
+C 0xA3F8 ya: sigue
+L 0xA3FB canal_orden_fa_vuelve
+C 0xA3FB a la marca 2
+L 0xA400 canal_orden_f9            0xF9 n: la marca 3
+C 0xA404 cuantas veces...
+C 0xA406 ...en +7
+C 0xA40A la marca 3
+L 0xA40F canal_orden_f8            0xF8 (o mas): vuelve a la marca 3
+C 0xA40F una vez menos
+C 0xA414 ya: sigue
+L 0xA417 canal_orden_f8_vuelve
+C 0xA417 a la marca 3
+L 0xA41C canal_ruido               0xF0: una nota de ruido (el periodo y su barrido) y su duracion; el canal, a ruido en el registro 7
+C 0xA41C el ruido
+C 0xA424 por donde va
+C 0xA427 el canal con ruido, sin tono
+L 0xA431 ruido_barrido             El barrido del ruido: cada tantos cuadros, el periodo + el paso, unas cuantas veces
+C 0xA431 hay ruido?
+C 0xA436 con barrido?
+C 0xA43B quedan pasos?
+C 0xA440 la espera...
+C 0xA443 ...un cuadro menos
+C 0xA448 un paso menos
+C 0xA44F otra vez la espera
+C 0xA455 el periodo...
+C 0xA459 ...mas el paso
+C 0xA460 al registro 6
+C 0xA47C 15: la envolvente corta
+C 0xA481 la cuenta de la envolvente
+C 0xA485 la espera...
+C 0xA487 ...otra vez
+C 0xA489 el volumen, uno menos
+C 0xA48B al PSG
+L 0xA494 canal_cuenta_sigue
+L 0xA496 canal_cuenta_15
+C 0xA497 la cuenta
+C 0xA49C el volumen a 0
+L 0xA4A1 canal_cuenta_fin
+C 0xA4A3 acabada: A = 1
+L 0xA4A7 ruido_pon                 El ruido: su periodo fijo o con barrido (periodo, cuantas veces, cada cuanto, el paso)
+C 0xA4A7 la nota
+C 0xA4AB con barrido?
+C 0xA4B3 el periodo...
+C 0xA4B7 ...registro 6
+C 0xA4BA sin barrido
+C 0xA4C7 hay ruido
+L 0xA4CC ruido_barre
+C 0xA4CC hay ruido con barrido
+C 0xA4D3 el periodo...
+C 0xA4D7 ...registro 6
+C 0xA4DB cuantas veces...
+C 0xA4E0 ...cada cuanto
+L 0xA4E8 nota_pon                  Una nota: el byte de arriba es la duracion (0xA539, o el byte siguiente con 0xE), el de abajo el volumen (15: la mitad)
+C 0xA4E8 la nota...
+C 0xA4EC ...el volumen (la mitad baja)
+C 0xA4F1 la duracion (la mitad alta)...
+C 0xA4F8 ...0xE: en el byte siguiente
+C 0xA4FC la tabla de duraciones
+L 0xA503 nota_duracion
+C 0xA504 la duracion
+L 0xA507 nota_duracion_byte
+L 0xA509 nota_volumen
+C 0xA50C volumen 15?
+C 0xA513 la duracion...
+C 0xA518 ...menos la mitad: la espera
+L 0xA51E nota_cuenta
+C 0xA51E la cuenta de la envolvente
+C 0xA521 el volumen 15
+C 0xA526 al PSG
+L 0xA547 psg_c                     WRTPSG: el registro C
+C 0xA547 el valor...
+C 0xA548 ...el registro C
+L 0xA549 psg
+C 0xA549 WRTPSG
+L 0xA54C psg_b                     El registro B
+C 0xA54C el registro B
+L 0xA550 psg_b1                    El registro B + 1
+C 0xA550 el registro B + 1
+L 0xA555 psg_mezcla                El registro 7
+C 0xA555 el registro 7
+L 0xA55A psg_ruido                 El registro 6
+C 0xA55A el registro 6
+L 0xA55F musica_empieza            Una musica: los tres canales de la tabla 0xA210 (6 bytes por musica)
+C 0xA55F la tabla de musicas
+C 0xA562 la musica pedida...
+C 0xA565 ...es la que suena
+C 0xA568 x 6
+C 0xA56E el canal A
+C 0xA578 la pedida, gastada
+C 0xA57B los tres canales con tono
+L 0xA57D sonido_mezcla
+L 0xA586 musica_acaba              El canal A acaba: si hay otra musica pedida, empieza; si no, todo callado
+C 0xA586 otra pedida?
+C 0xA58C sin musica
+C 0xA58F 0xFF: todo callado...
+L 0xA590 sonido_calla              Todo callado: el registro 7 a 0xFF y los canales (0xE280, 67 bytes) a cero
+C 0xA593 ...registro 7
+L 0xA5FD efecto_acaba              El canal B acaba: otro efecto pedido o los canales B y C callados
+C 0xA5FD otro pedido?
+C 0xA603 sin efecto
+C 0xA606 los canales B y C...
+C 0xA609 ...36 bytes a cero
+C 0xA60E B y C callados
+L 0xA615 canales_bc                Los canales B y C desde la tabla HL
+C 0xA615 el canal B: su pieza...
+C 0xA618 ...y su principio
+C 0xA621 el canal C
+C 0xA62C sin nota en marcha
+L 0xA634 canal_a_tabla             El canal A desde la tabla
+C 0xA634 + la musica x 6
+C 0xA636 el canal A: su pieza...
+C 0xA639 ...y su principio
+#
+# LA ROM: 16 KB en la pagina 2 (0x8000-0xBFFF). La cabecera es "AB" e INIT (0x8010); el resto, a cero.
+#
+# LA INTERRUPCION va por el gancho H.TIMI (0xFD9F): INIT pone alli un "jp 0x8F81".
+#
+# EL JUEGO: un ninja (el protagonista) en el castillo: el muro de fuera (la fase 1) y los pisos de dentro; TIME
+# baja desde 1000, HISCORE y SCORE arriba. Tres vidas.
+#
+# LOS TEXTOS van en casillas propias, las letras de la BIOS copiadas a las casillas 0-0x2F: 0x00-0x09 las cifras,
+# 0x0A los dos puntos, 0x10 el espacio, 0x11 la A ... 0x2A la Z.
+#
+# LA RAM, lo que se lee en el listado:
+#   0xE000 la partida en marcha (0 en la demostracion)   0xE00A la fase   0xE00B las vidas
+#   0xE010-0xE01F cuentas de cuadros   0xE040-0xE046 los botones   0xE100 los sprites (el protagonista en 0xE100)
+#   0xE183 / 0xE186 como acaba la fase   0xE2BD-0xE2D5 el motor de sonido   0xE300 los otros (16 bytes cada uno)
+D 0x8000 0x8010 cabecera  "AB", INIT (0x8010) y el resto de la cabecera a cero
+F 0x8000 2,w,12
+L 0x8046 init_letras
+C 0x804B el color 0 a la casilla 0x10 (el espacio), en los tres tercios
+L 0x8051 init_espacio
+C 0x8064 el registro 1 a 0xA2: la pantalla apagada, sprites de 16 x 16
+C 0x8069 WRTVDP
+C 0x806C 0xE090 = 3
+C 0x8071 0xE095 = 0x30
+C 0x8076 con interrupciones
+L 0x8077 titulo                    El titulo: la presentacion de CASIO, 伊賀忍法帖, CASIO, PUSH TRIG:1 OR SPACE y el copyright; los colores del titulo cambian con bytes de la pagina 1 (desde 0x4000); al rato, la demostracion
+C 0x8077 la pantalla en blanco
+C 0x807D las casillas del titulo en los tres tercios
+L 0x8082 titulo_casillas
+C 0x8087 y sus colores
+L 0x808C titulo_colores
+C 0x8091 ENASCR
+C 0x8094 la presentacion de CASIO
+C 0x8097 el nombre en letras grandes (0x8EDB)...
+C 0x809A ...desde la fila 8, columna 6: tres filas
+L 0x809F titulo_nombre
+C 0x80A4 CASIO (6 casillas)...
+C 0x80A7 ...en la fila 15, columna 13
+C 0x80AD LDIRVM
+C 0x80B0 PUSH TRIG:1 OR SPACE (20 casillas)...
+C 0x80B3 ...en la fila 18, columna 6
+C 0x80B9 LDIRVM
+C 0x80BC el copyright...
+C 0x80BF ...en la fila 20, columna 5
+C 0x80C5 LDIRVM
+C 0x80C8 ENASCR
+C 0x80CB los colores salen de 0x4000 en adelante
+C 0x80D2 la cuenta a 0
+L 0x80D6 titulo_espera             Espera: a los 240 cuadros (0xE018), la demostracion; cada 3 cuadros, 512 colores nuevos
+C 0x80D9 240?
+C 0x80DE cada 3 cuadros
+C 0x80E9 a 0xE800...
+C 0x80EC ...512 bytes...
+C 0x80EF ...de la pagina 1
+L 0x80F3 titulo_color              Un byte: su mitad alta es el color (0x20 o mas); si no, 0x60
+C 0x80F6 0x20 o mas?
+C 0x80FA si no, 0x60
+L 0x80FC titulo_color_pon
+C 0x8104 los 512 colores...
+C 0x8107 ...en el tercer tercio (0x2A00)
+C 0x810D LDIRVM
+C 0x8110 la proxima vez, un byte mas alla
+L 0x8119 titulo_boton              El boton de empezar?
+C 0x811F gastado
+L 0x8125 demostracion              La demostracion: una fase al azar de la 1 a la 4
+C 0x8126 las decenas a 0
+C 0x8129 al azar...
+C 0x812D ...de 1 a 4
+C 0x8131 0xE048 = 1: la demostracion
+L 0x8138 partida                   Una partida nueva: la fase 1, tres vidas, los puntos a cero
+C 0x8139 sin demostracion
+C 0x8145 la fase 1...
+C 0x814A ...y en partida
+C 0x814D tres vidas
+C 0x815C y los tres bytes BCD
+L 0x8166 fase                      Una fase: la pantalla, los sprites; el protagonista en su sitio segun la fase; la musica 2 y el bucle
+C 0x8166 la pantalla en blanco
+C 0x8169 la fase en la pantalla
+C 0x816F el protagonista (0xE100)
+C 0x8173 0xE19C = 1
+C 0x8178 sus dos sprites, fuera (Y 0xEE)...
+C 0x8180 ...el dibujo 0x28, color 5...
+C 0x8188 ...y el 0x2C, color 11
+C 0x8190 la fase 1?
+C 0x8197 la 5?
+L 0x81AE fase5                     La 5: 0xEE30, 0x2B y 0x20
+L 0x81C1 fase1                     La 1: el protagonista en Y 0x90, X 0x7C
+L 0x81D1 fase_empieza
+C 0x81D4 los sprites a la VRAM
+C 0x81D7 ENASCR
+C 0x81DA la musica 2
+C 0x81E2 las cuentas y los botones a 0
+C 0x81F2 0xE1B1 = 0x80
+C 0x81F7 la fase 1?
+C 0x8201 la 5?
+C 0x8208 las otras: Y 0x9F, X 0x7C
+L 0x821A fase5_sitio               La 5: Y 0x6F, X 0x7C
+L 0x822A fase_cero
+L 0x8237 fase_bucle                El bucle de la fase: un paso por cuadro (0xE011); se acaba con 0xE183 (0x8B7B) o 0xE186 (0x8C49)
+C 0x8237 0xE183?
+C 0x823E 0xE186?
+L 0x8245 fase_cuadro               Un cuadro: los sprites, el protagonista, los otros, la salida de los otros, el sonido y lo demas
+C 0x8245 un cuadro?
+C 0x824C gastado
+L 0x826E fase_sigue                En la demostracion, el boton vuelve al titulo
+C 0x826E en partida, sigue
+C 0x8274 el boton de empezar?
+C 0x827A al titulo
+L 0x827D fase1_salida              En la fase 1: con 0xE1D1 y el protagonista arriba (Y menos de 0x52) en la columna 0x79-0x7D, la fase se acaba (0xE186)
+C 0x8288 arriba?
+C 0x828E en la columna?
+C 0x8297 la fase se acaba
+L 0x829D sonido_e1b4               Con 0xE1B4, el efecto 2
+L 0x82A8 salen                     Cuando la cuenta de 0xE1B1 llega a 0, salen otros; a 0x28 en la fase 1, seis mas (0xE304)
+C 0x82AC a 0: salen
+C 0x82AE 0x28?
+L 0x82B2 salen_cuenta              La cuenta, uno menos
+L 0x82BC salen_28
+L 0x82C7 salen_seis
+L 0x82CF salen_seis_uno
+C 0x82D3 el tipo 6
+L 0x82D8 salen_seis_sig
+L 0x82DE salen_otro                La cuenta nueva (al azar) y otro que sale segun la fase
+C 0x82DE al azar 0-63
+C 0x82E8 la fase 1: 16 + eso
+L 0x82EF salen_fase                Las otras: 0x60 - (fase + 1) x 8 + eso
+L 0x82F2 salen_fase_x8
+L 0x82FC salen_pon
+C 0x830C la fase 1?
+C 0x8314 por turnos (0xE1B8, 1-5)
+L 0x8335 sale1                     El turno 1: el hueco de 0xE364 (tipo 3); desde la fase 3, a veces el tipo 8
+L 0x835A sale2                     El turno 2: 0xE384
+L 0x836A sale3                     El turno 3: 0xE3A4
+L 0x8379 sale4                     El turno 4: 0xE3B4 (tipo 2)
+L 0x8383 sale5                     El turno 5: 0xE344 (tipo 1)
+L 0x838C sale_fase1                En la fase 1: hasta 10 (0xE1B2), del tipo 5 en un hueco al azar desde 0xE394
+L 0x839F sale_fase1_hueco
+L 0x83A7 sale_fase1_pon
+L 0x83AD sale_fase1_sig
+L 0x83B9 sale_fase1_mira
+L 0x83BE otros                     Los dieciseis de 0xE300 (16 bytes): los que estan (+4), cada uno
+C 0x83BE desde 0xE300
+C 0x83C2 dieciseis
+L 0x83C4 otros_uno
+C 0x83C5 esta?
+L 0x83CB otros_sig
+L 0x83D4 otros_mueve
+L 0x83D9 otro_fuera                Fuera de la pantalla (Y menos de 4 o 0xC0 o mas, X 0xF6 o mas): borrado
+L 0x83EC otro_borra
+C 0x83EC el tipo 8?
+C 0x83F3 ya puede salir otro
+L 0x83FC otro_borra_byte
+C 0x8401 fuera (Y 0xEC)
+L 0x841D cerca_x2                  En X contra +9 del protagonista
+L 0x8425 cerca_x1                  En X contra +1 del protagonista
+D 0x842D 0x843D cerca_otras  Dos variantes mas de 0x8406 ("ld a,(iy+0Ah) / sub (ix+0) / jr" y con +8): ningun call ni salto llega aqui y no corren en las medidas de openMSX
+F 0x842D 8
+L 0x843D lado_azar                 +8 al azar y +9 = 0 o 0x10 al azar (el lado por donde sale); Z si 0
+C 0x843D al azar
+C 0x8441 en +8
+C 0x8444 el bit 0...
+C 0x844A ...x 16 en +9: el lado
+L 0x844F otro                      Uno de los otros, segun su tipo (+4): 1, 2, 3 y 8, 4 y 7, 5, 6
+C 0x844F el tipo
+L 0x847A tipo1                     El tipo 1: sale a una altura y cruza la pantalla de lado, 3 puntos por cuadro; si toca al protagonista, 0xE183 = 1
+C 0x847A el protagonista ya tocado?
+C 0x847F ya ha salido?
+C 0x8486 sale
+C 0x8489 el protagonista en una escalera?
+L 0x8496 tipo1_y_prota             La Y del protagonista
+L 0x84A4 tipo1_y_pon               - 12
+L 0x84AA sale_altura               La altura por donde sale, al azar entre los pisos de la fase (0x9F, 0x6F, 0x3F o 0xE8 en la 5); y el lado
+C 0x84AA al azar
+C 0x84B8 el tipo 1...
+C 0x84BF ...a la altura del protagonista
+L 0x84C7 sale_altura_piso          Segun el piso del protagonista (0xE190)
+L 0x84D2 sale_abajo                El piso de abajo: 0x9F (0xE8 en la fase 5)
+L 0x84DF sale_abajo5
+L 0x84E5 sale_medio                El de en medio: 0x6F
+L 0x84EB sale_arriba               El de arriba: 0x3F
+L 0x84F6 sale_lado                 Por la derecha (X 0xF5, dibujo 0x78) o por la izquierda (X 0, dibujo 0x7C)
+L 0x8505 sale_izquierda
+L 0x850D sale_color                Color 15 y ya ha salido (+5)
+L 0x8515 tipo1_anda                3 puntos por cuadro hacia su lado
+C 0x8519 hacia la derecha?
+L 0x8526 tipo1_derecha
+L 0x852F tipo1_toca                Si toca al protagonista: 0xE183 = 1
+C 0x852F agachado (0xE1BE)?
+C 0x8535 en Y...
+C 0x853D ...y en X?
+C 0x8545 tocado
+L 0x854B tipo1_fase2               En la fase 2, con 0xE1B4 y 0xE19B: si toca lo de 0xE108, se va (Y 0xE8)
+L 0x857A tipo2                     El tipo 2: sale como el 1 y cruza de punto en punto, cambiando de dibujo (0x80/0x84) y de color (9/10)
+C 0x857A el protagonista ya tocado?
+C 0x8585 sale
+L 0x8595 tipo2_anda
+L 0x85A0 tipo2_derecha
+L 0x85A3 tipo2_dibujo              El dibujo y el color cambian con la cuenta 0xE01F
+C 0x85B8 toca al protagonista?
+C 0x85C8 tocado
+L 0x85CD tipo2_fase2               En la fase 2, igual que el tipo 1
+L 0x85FC tipo5                     El tipo 5: sale en una fila (+6 x 24 + 0x38 + algo al azar, hasta 0x97), color 13, por un lado
+C 0x8600 ya ha salido?
+L 0x860F tipo5_fila
+C 0x8615 al azar
+C 0x861D no mas abajo de 0x97
+L 0x8623 tipo5_pon
+L 0x8635 tipo5_izquierda
+L 0x8639 tipo5_cuenta
+L 0x863E tipo3                     Los tipos 3 y 8: salen en un piso (+0x0E: 1 abajo, 2 en medio, si no arriba), con el dibujo 0x50 o 0x60 segun el lado
+C 0x8641 ya ha salido?
+C 0x8647 su piso
+L 0x8660 tipo3_medio
+L 0x8666 tipo3_abajo
+L 0x8674 tipo3_abajo_pon
+L 0x8678 tipo3_lado
+L 0x868B tipo3_derecha
+L 0x8694 tipo3_tira                Ya en marcha: de vez en cuando (+8 a 0) tira algo (16 bytes antes, -0x10): de dibujo 0x9C (el tipo 8) o 0xA4
+C 0x8699 la espera...
+C 0x869F en la fase 3 con 0xE1B4, no tira
+C 0x86AC ya tiene algo en marcha?
+C 0x86B2 su Y + 4...
+C 0x86BA ...su X...
+C 0x86C0 ...su lado
+C 0x86C6 el tipo 8?
+C 0x86CD el dibujo 0x9C, color 15, el tipo 7
+L 0x86DB tipo3_tira_a4             El dibujo 0xA4, color 7, el tipo 4
+L 0x86E7 tipo3_espera              Una espera al azar; salvo el tipo 5, un lado al azar
+L 0x86FF tipo3_lado_der
+L 0x8704 tipo3_anda                En marcha: anda hacia su lado (el tipo 3, un paso de cada dos) y mira el suelo (0x888B)
+C 0x8704 la espera, uno menos
+C 0x8707 la cuenta de pasos
+C 0x870A el suelo
+C 0x8714 un paso de cada dos
+L 0x871B tipo3_anda_fase3          En la fase 3 con 0xE1B4, quieto
+L 0x872A tipo3_paso                Un punto hacia su lado
+L 0x8735 tipo3_paso_der
+L 0x8738 tipo8_salta               El tipo 8 en las columnas 0x50-0x57 o 0x9E-0xA1: el estado 3 (0xE1D0 = 2)
+L 0x874C tipo8_columna
+L 0x875F tipo8_estado3
+L 0x876C tipo3_toca                Su dibujo; si toca al protagonista: 0xE183 = 2 (salvo con 0xE197); si le da lo del protagonista (+8, con 0xE19B), cae
+C 0x8774 en Y...
+C 0x877C ...y en X?
+C 0x878A tocado: 0xE183 = 2
+L 0x8790 tipo3_le_dan              Lo que tira el protagonista (0xE108), con 0xE19B, le da?
+L 0x87B4 tipo3_quita               Lo del protagonista fuera (Y 0xF0)
+L 0x87BC tipo3_cae                 Cae: el efecto 2, una espera, uno mas en la cuenta de 0xE1B2 (en la pantalla, fila 1, columna 15) y sus puntos
+C 0x87BC el efecto 2
+C 0x87C8 uno mas
+C 0x87D5 10?
+C 0x87DC 10: 0 y 1 delante
+C 0x87E6 en la fase 1, 0xE1D1 = 1: ya se puede salir
+L 0x87F0 tipo3_puntos              En partida: el tipo 8 o en la fase 1, 10 puntos; si no, 5
+L 0x880F tipo3_estado2             El estado 2: cayendo hasta acabar la espera
+L 0x8831 tipo3_dibujo              Su dibujo: +6 + el lado + el paso (bit 0 de +8) x 4 + A; y su color segun el estado y el tipo
+L 0x885A tipo3_color
+L 0x886C tipo3_color_tipo          13; el tipo 5, 14; el tipo 8, 3
+L 0x887C tipo3_color11
+L 0x8881 tipo3_color14
+L 0x8886 tipo3_color3
+L 0x888B suelo                     Lo que tiene debajo (el mapa de la fase en 0xE720/0xE760): sin suelo (0x6C), cae (el estado 2); contra una pared (0x40), se da la vuelta
+C 0x888B la fase 5?
+C 0x8892 su fila en el mapa
+L 0x889D suelo_fila
+L 0x88B4 suelo_otras
+C 0x88D0 0x6C?
+C 0x88D6 y la de al lado?
+L 0x88ED fila8                     B = A / 8
+L 0x88F4 suelo_lado                La de al lado: una pared?
+L 0x8901 suelo_pared
+L 0x8919 suelo_izq
+L 0x891C vuelta_izq                Se da la vuelta: hacia la izquierda
+L 0x8922 vuelta_der                Hacia la derecha
+L 0x8926 suelo_fin
+L 0x8927 tipo3_estado3             El estado 3: parpadea 64 cuadros (dibujos 0x70/0x74, colores 2/11)
+L 0x893A tipo3_estado3_dibujo
+L 0x8950 tipo3_estado3_color
+L 0x8955 tipo3_estado4             El estado 4: cada tanto (al azar) salta hacia el protagonista con el efecto 7; cae por los huecos; si toca, 0xE183 = 1
+C 0x8960 el efecto 7
+C 0x8963 la espera al azar
+C 0x896C el protagonista, a un lado u otro
+L 0x8979 tipo3_salto_izq
+L 0x897B tipo3_salto
+L 0x8982 tipo3_estado4_suelo
+C 0x8992 al caer: el efecto 2 y 100 puntos
+L 0x899C tipo3_estado4_dibujo      Los dibujos 0xB8 (color 3) y 0xBC (color 6)
+L 0x89AE tipo3_estado4_dibujo2
+L 0x89B6 tipo3_estado4_toca
+C 0x89C6 tocado
+L 0x89CB tipo3_estado4_fuera
+L 0x89DD tipo4                     Los tipos 4 y 7 (lo que tiran los otros): 2 puntos por cuadro; si toca al protagonista, 0xE183 = 1; si da con lo del protagonista, los dos se van
+C 0x89DD el protagonista ya tocado?
+C 0x89E2 hacia la derecha?
+L 0x89F0 tipo4_derecha
+L 0x89F6 tipo4_dibujo              El tipo 7: 0x9C/0xA0; el 4: 0xA4/0xA8
+L 0x8A09 tipo4_dibujo4
+L 0x8A13 tipo4_toca
+C 0x8A23 tocado
+L 0x8A29 tipo4_choca               Contra lo del protagonista: el efecto 3 y fuera
+C 0x8A39 el efecto 3
+L 0x8A5C tipo6                     El tipo 6: cae desde arriba (Y 0x38) en una de cuatro columnas al azar (0x18, 0x40, 0xB0, 0xD8), espera 16 cuadros y baja hacia el protagonista
+C 0x8A5C el protagonista ya tocado?
+C 0x8A61 ya ha salido?
+C 0x8A6A al azar...
+C 0x8A6F 0: la columna 0x18
+C 0x8A79 3: 0xD8
+L 0x8A7D tipo6_b0
+L 0x8A81 tipo6_40
+L 0x8A85 tipo6_18
+L 0x8A87 tipo6_pon                 Su sitio, el dibujo 0x98, color 11, y hacia donde baja segun el protagonista (+7, 0-4)
+C 0x8A98 su X menos la del protagonista
+L 0x8AB8 tipo6_dir
+L 0x8ABC tipo6_espera              El estado 1: 16 cuadros y el dibujo 0xA4, color 9
+L 0x8AD5 tipo6_baja                Baja 2 puntos por cuadro y de lado segun +7
+L 0x8AEB tipo6_abajo
+L 0x8AF3 tipo6_izq1
+L 0x8AF8 tipo6_izq2
+L 0x8AFD tipo6_der2
+L 0x8B00 tipo6_der1
+L 0x8B05 tipo6_dibujo
+L 0x8B08 pantalla_juego            La pantalla del juego: apagada, en blanco, la fase, el marcador y las casillas del juego en los tres tercios
+C 0x8B08 DISSCR
+C 0x8B15 los botones a 0
+C 0x8B24 las casillas del juego desde la 0x30, en los tres tercios
+C 0x8B36 y sus colores
+C 0x8B48 los dibujos de los sprites
+L 0x8B4B espera_musica             8 cuadros, y espera a que acabe la musica (o el boton en la demostracion); despues el sonido callado y 16 cuadros
+L 0x8B4F espera_musica8
+L 0x8B56 espera_musica_va
+C 0x8B5C el boton?
+C 0x8B61 una musica sonando?
+C 0x8B67 o pedida?
+C 0x8B70 el sonido callado
+L 0x8B73 espera_musica16
+L 0x8B7B tocado                    El protagonista tocado (0xE183): desde la fase 4 con 0xE1B4, nada; si no, la musica 5, se queda parado y cae; una vida menos
+C 0x8B88 nada
+L 0x8B8F tocado_va
+C 0x8B8F el sonido callado
+C 0x8B9D la musica 5
+L 0x8BA6 tocado_cuadro             Un cuadro: los otros se mueven, el protagonista parpadea (los dibujos 0x88/0x90)
+C 0x8BB1 los otros
+C 0x8BB7 los sprites a la VRAM
+C 0x8BC9 0xE183 = 5 (de una caida)?
+C 0x8BD0 32 cuadros quieto...
+C 0x8BDF ...y despues cae 8
+L 0x8BE7 tocado_espera             64 cuadros
+L 0x8BF1 tocado_fin
+C 0x8BF8 quedan vidas?
+C 0x8BFF una menos...
+C 0x8C03 ...y la fase otra vez
+L 0x8C06 game_over                 GAME OVER (0x8F6B) en la fila 10, columna 12, la musica 1 y al titulo
+C 0x8C15 la musica 1
+L 0x8C2A puerta_izq                Cinco filas de la puerta, una casilla a la izquierda (en el mapa de la RAM)
+L 0x8C2C puerta_izq_fila
+L 0x8C38 puerta_der                Cinco filas, una casilla a la derecha, y el mapa a la pantalla
+L 0x8C3A puerta_der_fila
+L 0x8C49 fase_fin                  La fase acaba (0xE186): en la fase 1, la puerta del castillo se abre, el protagonista sube y entra; despues TIME a puntos y la fase siguiente
+C 0x8C4C la fase 1?
+C 0x8C54 la musica 3
+L 0x8C5D puerta_espera             32 cuadros
+C 0x8C68 la puerta, un paso (0xE1D1: 1 y 2)
+L 0x8C81 puerta_paso2
+L 0x8C95 puerta_sube               El protagonista sube hasta Y 0x3C, con sus dibujos 0x28/0x30
+C 0x8CA3 un punto arriba
+C 0x8CBF dentro: fuera de la pantalla
+C 0x8CCA la puerta abierta (0x91EA): 5 filas de 6
+L 0x8CD4 puerta_casilla
+L 0x8CE6 fin_cuenta                TIME baja de uno en uno: cada uno, un punto (en la fase 1 o sin nada en 0xE1B2, 0); a cero, la fase siguiente
+C 0x8CE6 la musica 3
+C 0x8CEB las unidades?
+C 0x8CF2 las decenas?
+C 0x8CF9 las centenas?
+L 0x8D02 fin_unidad
+L 0x8D08 fin_decena
+L 0x8D13 fin_centena
+L 0x8D1F fin_puntos
+L 0x8D2D fin_puntos_pon
+L 0x8D38 fase_siguiente            La fase siguiente: tras la 5, la 1 otra vez y una vuelta mas (0xE009, hasta 9)
+C 0x8D3E una mas
+C 0x8D40 pasa de 5?
+C 0x8D45 la 1...
+C 0x8D48 ...y una vuelta mas
+L 0x8D54 marcador                  El marcador: TIME y HISCORE (fila 0, columna 7), SCORE (fila 1, columna 19), las cifras y las vidas
+C 0x8D5D LDIRVM
+C 0x8D69 LDIRVM
+C 0x8D81 LDIRVM
+L 0x8D85 tiempo                    TIME baja: uno cada (7 - la vuelta, como poco 2) cuadros; con menos de 100, el efecto 1; a cero, OVER y la fase perdida (0xE183 = 40)
+C 0x8D85 la fase acaba?
+C 0x8D8A tocado?
+C 0x8D8F ya sin tiempo?
+C 0x8D94 la vuelta...
+C 0x8D9E ...7 menos ella
+C 0x8DA6 aun no
+C 0x8DAD los millares a 0...
+C 0x8DB3 ...y las centenas?
+C 0x8DB8 el efecto 1
+L 0x8D9D tiempo_cada
+L 0x8DBB tiempo_baja
+C 0x8DCE todo a 0: sin tiempo
+C 0x8DD5 0xE185 (nadie lo escribe: siempre 0)?
+C 0x8DDB la fase perdida: 0xE183 = 40
+L 0x8DE0 tiempo_over               OVER (0x8F61)
+C 0x8025 la interrupcion (0x8F81)...
+L 0x8E21 tiempo_1100               TIME a 1100 de partida: las cifras a 0 y luego 0xE083 y 0xE084 a 1 (TIME guarda al reves: 0xE080 las unidades)
+C 0x8E21 todo a 0
+C 0x8E24 un 1...
+C 0x8E26 ...en la copia de los millares
+C 0x8E29 ...y en las centenas
+L 0x8E41 ram_borra                 La RAM del juego de 0xE100 a 0xF07F a cero, los 32 sprites de 0xE300 fuera y todo a la VRAM
+C 0x8E41 desde 0xE100...
+C 0x8E44 ...0xF80 bytes
+C 0x8E4A los 16 bits...
+C 0x8E4B ...hasta 0
+L 0x8E4F ram_sprites               Los 32 sprites de la RAM (0xE300, 16 bytes cada uno) con la Y fuera (0xF0) y pasados a la VRAM
+C 0x8E5C a la tabla de 4 bytes (0xE100)
+C 0x8E5F y a la VRAM
+C 0x8E7C el contador de tercios
+C 0x8E80 ...0x180 bytes
+L 0x8E83 vram_copia                LDIRVM y DE + 0x800: al mismo sitio del siguiente tercio
+C 0x8E86 + 0x800...
+L 0x8E89 vram_tercio               HL + BC en DE, y B (los tercios que faltan) de vuelta
+C 0x8E8A ...en DE
+L 0x8E8D vram_casillas_a800        Las casillas 0xA800-0xADFF (0x600 bytes) a la VRAM (DE), y DE al siguiente tercio
+C 0x8E8E de 0xA800...
+C 0x8E91 ...0x600 bytes
+L 0x8E96 vram_casillas_b000        Lo mismo desde 0xB000 (0x600 bytes): los colores
+C 0x8E97 de 0xB000...
+C 0x8E9A ...0x600 bytes
+L 0x8E9F vram_fila                 Una fila de 19 casillas de HL a DE en la VRAM y DE una fila mas abajo (+ 0x20)
+C 0x8EA0 19 casillas
+C 0x8EA3 LDIRVM
+C 0x8EA6 la siguiente fila
+L 0x8EAB vram_llena8               FILVRM de 8 bytes con A en HL, y HL al siguiente tercio
+C 0x8EAC 8 bytes
+L 0x8EAF vram_llena                FILVRM y HL + 0x800
+C 0x8EAF FILVRM
+C 0x8EB2 el siguiente tercio
+L 0x8EB8 vram_color_f0             0x200 bytes de color 0xF0 (blanco sobre transparente) en HL, y HL al siguiente tercio
+C 0x8EB9 0x200 bytes...
+C 0x8EBC ...de 0xF0
+L 0x8EC0 vram_casillas_ae00        Las casillas 0xAE00-0xAFFF (0x200 bytes) a la VRAM (DE)
+C 0x8EC1 de 0xAE00...
+C 0x8EC4 ...0x200 bytes
+C 0x8EC9 a 0x3800
+C 0x8ED2 LDIRVM
+L 0x8ED5 sonido_pide_calla         0xE097 = 0xFF: la interrupcion callara el sonido en el siguiente cuadro
+C 0x8ED5 0xFF...
+C 0x8ED7 ...en 0xE097
+D 0x8F44 0x8F4B texto_time          "TIME:01" del marcador
+D 0x8F5D 0x8F61 texto_vidas         0xE7 (el dibujo del ninja) y ":00", las vidas del marcador
+D 0x8F61 0x8F6B texto_over          "OVER100000", la linea del bonus de las vidas
+D 0x8F6B 0x8F74 texto_game_over     "GAME OVER"
+L 0x8F81 interrupcion              La interrupcion (H.TIMI): el sonido (callado si 0xE097 = 0xFF), 16 cuentas de cuadros (0xE010-0xE01F) y la palanca y los botones; en la demostracion, al azar
+C 0x8F81 callar el sonido?
+C 0x8F86 no
+C 0x8F88 callado...
+C 0x8F8C ...y hecho
+L 0x8F8F interrupcion_sonido
+C 0x8F8F el canal de musica 1...
+C 0x8F93 ...y el 2
+C 0x8F96 sonando alguno?
+L 0x8FA8 interrupcion_motor
+C 0x8FA8 el motor de sonido
+C 0x8FBA 0xE040: el boton B del mando 1 (GTTRIG 3), con lo sostenido en 0xE041
+C 0x8FC5 0xE042: el boton A del mando 1 (GTTRIG 1), sostenido en 0xE08D
+C 0x8FD0 y del teclado: la barra en 0xE040 y GRAPH en 0xE042 (sostenidos en 0xE08B y 0xE08C)
+L 0x8FEE interrupcion_quieto       Fuera de partida: con la demostracion en marcha (0xE048), cada 24 cuadros una direccion y un boton al azar; si no, el boton de empezar y la palanca
+C 0x8FEE la demostracion?
+C 0x8FF2 no
+C 0x8FF4 24 cuadros?
+C 0x8FFB la cuenta a 0
+C 0x8FFF una direccion al azar (0-7)...
+C 0x9003 ...a la palanca
+C 0x9006 y el boton, al azar
+C 0x900D a 1: salta
+L 0x9012 interrupcion_titulo
+C 0x9012 el boton de empezar...
+C 0x9015 ...y la palanca
+L 0x9017 boton_empezar             El boton de empezar (0xE046): la barra (sostenida en 0xE045) o el boton A del mando 1 (sostenido en 0xE041)
+C 0x9017 la barra...
+C 0x901D SNSMAT fila 8
+C 0x9020 recien pulsada...
+C 0x9021 ...guardada
+C 0x9024 el boton A del mando 1
+C 0x9029 GTTRIG 1, al mismo 0xE046
+C 0x902E una...
+C 0x9031 ...u otro
+C 0x9054 la barra
+C 0x9059 GRAPH: sostenido en HL + 1...
+C 0x905A ...y en DE + 2
+C 0x905C la fila 6...
+C 0x905E SNSMAT
+C 0x9061 pulsado = 1
+C 0x9062 GRAPH
+L 0x9066 vidas_pinta               Las vidas (0xE00B, como mucho 5) en la fila 1, columna 7: tantas casillas 0xE8 como vidas
+C 0x9066 las vidas
+C 0x9069 ninguna: nada
+C 0x906B mas de 5...
+C 0x906F ...se ven 5
+L 0x9071 vidas_pinta_va
+C 0x9071 la fila 1, columna 7
+C 0x9074 tantas casillas...
+C 0x9077 ...0xE8
+C 0x9079 FILVRM
+L 0x907D fase_pinta                La fase (0xE00A) como tantos dibujos de pergamino: las casillas 0x64 en la fila 0 y 0x68 en la 1, desde la columna 1
+C 0x907D la fase...
+C 0x9080 ...cuantas casillas
+C 0x9084 la fila 0, columna 1
+C 0x9087 0x64, la mitad de arriba
+C 0x9089 FILVRM
+C 0x908D la fila 1, columna 1
+C 0x9090 0x68, la de abajo
+C 0x9092 FILVRM
+L 0x9096 marcador_cifras           Las seis cifras de los puntos (0xE001) en la fila 1, columna 25, y las del record (0xE08E) en la fila 0
+C 0x9096 los puntos...
+C 0x9099 ...en la fila 1, columna 25
+C 0x909F LDIRVM
+C 0x90A2 el record...
+C 0x90A5 ...en la fila 0
+C 0x90C6 al pasar los 10000: una vida mas, hasta 9
+C 0x90C9 ya 9?
+C 0x90CD una mas
+C 0x90D2 en la pantalla
+L 0x90D6 puntos_mas
+C 0x90E1 sin acarreo
+C 0x90E3 pasados de 999999: tope... pero el bucle no avanza HL y solo pone 0x99 en 0xE00C, tres veces
+L 0x90E8 puntos_tope
+C 0x90E8 0x99, siempre en el mismo byte
+L 0x90EC puntos_vida3000           Una vida de regalo la primera vez que las centenas y millares pasan de 3000 (0xE0D3 lo apunta)
+C 0x90EC ya dada?
+C 0x90F2 los millares...
+C 0x90F5 ...a 3000?
+C 0x90F9 dada
+C 0x90FC una vida mas
+C 0x9103 en la pantalla
+L 0x9106 puntos_fin
+C 0x9106 las cifras sueltas
+C 0x9109 y el record
+C 0x9128 el record (0xE094)...
+C 0x912E el byte alto
+C 0x9130 los puntos
+C 0x9133 mas: record
+C 0x9135 el del medio
+C 0x913C mas: record
+C 0x913E el bajo
+C 0x9145 igual o mas: record
+L 0x9147 record_hl2                Los punteros al tercer byte para el lddr
+L 0x9149 record_hl1
+L 0x914B record_nuevo              Los tres bytes de los puntos al record y sus seis cifras (0xE08E)
+C 0x914E de atras adelante
+C 0x9150 las cifras del record...
+C 0x9153 ...de los bytes
+D 0x915A 0x916A espacios16          16 espacios (casilla 0x10): HL apunta aqui para borrar una linea de texto
+C 0x8041 las letras de la BIOS ("0" a "_", 0x30-0x5F: 0x1D3F = 0x1BBF + 0x30 x 8, la direccion fija de la BIOS japonesa) a las casillas 0-0x2F, en los tres tercios
+L 0x8E7C vram_copia_pon            Las letras de la BIOS desde 0x1D3F (0x180 bytes: de "0" a "_") a DE en la VRAM, y DE al siguiente tercio
+C 0x8E7D de 0x1D3F (la BIOS)...
+C 0x8E83 LDIRVM: vuelve con HL = la VRAM y DE = la RAM + BC
+D 0x8EDB 0x8F14 titulo_kanji        Las casillas de 伊賀忍法帖 en letras grandes: tres filas de 19 (cinco kanji de 3 x 3 con un espacio, 0x10), copiadas fila a fila a la fila 8
+D 0x8F14 0x8F1A titulo_casio        CASIO en seis casillas (0xEA-0xEF), en la fila 15
+D 0x8F1A 0x8F2E texto_push          "PUSH TRIG:1 OR SPACE" en las casillas de letras (0x10 espacio, 0x11 A ... 0x2A Z, 0x0A dos puntos)
+D 0x8F2E 0x8F44 texto_copyright     "COPYRIGHT 1985 (C) CASIO" (0xE9 es la C en un circulo)
+L 0x916A puerta_entra              Al empezar las fases 2 a 5: la puerta por la que entra el protagonista, un paso cada 6 cuadros (0xE1C8 de 0 a 8)
+C 0x916A cada 6 cuadros
+C 0x9171 la cuenta a 0
+C 0x9175 un paso de la puerta
+C 0x9178 el mapa a la pantalla
+C 0x917B y los sprites
+C 0x917E el paso 9?
+C 0x9185 hecho: 0xE1C8...
+C 0x9189 ...y 0xE186 (que pone 0xB711) a 0
+L 0x918D puerta_entra_paso         Un paso: la puerta en el mapa (0xED30; 0xEDB0 en la 5): 0 medio abierta, 1 abierta, 2 el protagonista aparece, 3-6 baja en diagonal, 7 medio abierta, 8 cerrada
+C 0x918D la fase 5?
+C 0x9194 la puerta en 0xED30 (fila 16, columna 48)
+L 0x9199 puerta_entra_5
+C 0x9199 en la 5, 0xEDB0 (fila 53, columna 16)
+L 0x919C puerta_entra_que
+C 0x919C el paso
+C 0x91A0 0: medio abierta
+C 0x91A5 1: abierta
+C 0x91A8 3 o mas?
+C 0x91AC 2: el protagonista aparece en la puerta
+C 0x91B3 Y 0x9B
+L 0x91BD puerta_entra_y5
+C 0x91BD en la 5, Y 0x6F
+L 0x91C5 puerta_entra_x
+C 0x91C5 X 0x79
+L 0x91CF puerta_entra_baja
+C 0x91CF 7 u 8?
+C 0x91D3 3-6: un punto abajo y a la derecha
+L 0x91DF puerta_entra_sig
+C 0x91DF el paso siguiente
+L 0x91E4 puerta_entra_cierra
+C 0x91E4 7: medio abierta
+C 0x91E7 8: cerrada
+D 0x91EA 0x9208 puerta_abierta      La puerta del castillo abierta en la fase 1: 5 filas de 6 casillas (0xD1-0xD9), que 0x8CCA copia al mapa
+L 0x9208 pantalla_corre            ¿Corre la pantalla en vez del protagonista? A = 0 si corre (el protagonista en el centro, X 0x7C/0x7D, y el mapa con sitio: 0xE193 de 0 a 0x40); 0xFF si se mueve el sprite. En las fases 1 y 5, nunca
+C 0x9208 la fase 1 o la 5: no
+C 0x9213 hacia la derecha?
+C 0x921A a la derecha: el protagonista en el centro?
+C 0x9221 el mapa ya al final (0x40)?
+C 0x9226 no: corre
+L 0x922A pantalla_corre_izq
+C 0x922A a la izquierda: el protagonista en el centro?
+C 0x9231 el mapa al principio?
+C 0x9235 no: corre
+L 0x9239 pantalla_si
+C 0x9239 A = 0: corre la pantalla
+L 0x923B pantalla_no
+C 0x923B A = 0xFF: se mueve el sprite
+D 0x9787 0x9789 jr_muerto           "jr 0x97D6": detras de un ret y sin salto que llegue aqui
+L 0x9A4D mapa_fase                 El mapa de la fase en la RAM (0xE700): la 1 sale comprimida de 0x9EBC; la 5, de 0xB764 y relleno; la 2 a la 4 se hacen con filas fijas y luego las piezas de la tabla 0xBE3F
+C 0x9A4D la fase 5?
+C 0x9A55 la 1?
+C 0x9A5A el mapa en blanco (0xA0)
+L 0x9A62 mapa_fila_b1
+C 0x9A7F 0x60 casillas
+C 0x9A82 seis y otra vez
+L 0x9A8C mapa_suelo_casilla
+L 0x9A99 mapa_piso
+L 0x9A9B mapa_piso_casilla
+C 0x9AA4 y las piezas
+L 0x9AA7 mapa_fase5                La 5: comprimida desde 0xB764, y despues ocho bandas de 0xA0 en blanco + 32 de 0xB0, y ocho filas de 0x5E 0x5F
+C 0x9AAA comprimida
+C 0x9AB0 DE (el final) a HL
+C 0x9AB4 ocho veces
+L 0x9AB6 mapa5_banda
+C 0x9AB8 cinco filas en blanco...
+L 0x9AB9 mapa5_b0
+C 0x9AB9 ...y una de 0xB0
+L 0x9AC3 mapa5_suelo
+L 0x9AC5 mapa5_suelo_casilla
+L 0x9AD3 mapa_fase1                La 1: comprimida desde 0x9EBC
+L 0x9AD6 mapa_rle                  Descomprime HL a 0xE700: un byte con la mitad alta a 0 es una cuenta (el siguiente se repite tantas veces); cualquier otro va tal cual; 0xFF acaba
+C 0x9AD6 a 0xE700
+L 0x9AD9 mapa_rle_byte
+C 0x9ADA 0xFF: acaba
+C 0x9ADD la mitad alta a 0: cuenta
+C 0x9AE1 tal cual
+L 0x9AE7 mapa_rle_cuenta
+C 0x9AE7 la cuenta
+C 0x9AE9 el byte
+L 0x9AEB mapa_rle_repite
+L 0x9AF1 pieza_lista               La lista siguiente de piezas (0xE1C0): cuantas (0xE1C2) y la primera direccion del mapa en HL
+C 0x9AF1 donde va la lista
+L 0x9AF5 pieza_lista_de
+C 0x9AF5 cuantas
+L 0x9AFA pieza_dir                 La direccion siguiente de la lista en HL
+C 0x9AFA la direccion...
+C 0x9B00 ...y la lista sigue
+L 0x9B05 mapa_piezas               Las piezas de la fase (la tabla 0xBE3F por la fase, desde la 2): seis listas, una por clase (la septima desde la fase 4), cada una con cuantas y sus direcciones
+C 0x9B05 la tabla...
+C 0x9B08 ...por (fase - 2) x 2
+L 0x9B12 mapa_piezas_tabla
+C 0x9B13 la lista de la fase
+L 0x9B19 mapa_piezas1              La clase 1: 3 x 3 de 0xBE0D
+C 0x9B1C quedan?
+L 0x9B2E mapa_piezas2              La clase 2: 3 x 3 de 0xBE36
+L 0x9B31 mapa_piezas2_una
+L 0x9B46 mapa_piezas3              La clase 3: 4 x 4 de 0xBE16
+L 0x9B49 mapa_piezas3_una
+L 0x9B5E mapa_piezas4              La clase 4: 4 x 4 de 0xBE26
+L 0x9B61 mapa_piezas4_una
+L 0x9B76 mapa_piezas5              La clase 5: la escalera de 0xBE01 (seis filas de 3, la casilla 0x3F al final)
+L 0x9B79 mapa_piezas5_una
+L 0x9B8E mapa_piezas6              La clase 6: la escalera de 0xBE07
+L 0x9B91 mapa_piezas6_una
+L 0x9BA6 mapa_piezas7              Desde la fase 4, la clase 7: cinco filas de una casilla (0xBE00)
+C 0x9BA6 la fase 4 o mas?
+L 0x9BAF mapa_piezas7_una
+L 0x9BC4 mapa_piezas_fin
+D 0x9BC5 0x9BC6 ret_muerto          Un "ret" detras de otro: nadie salta aqui
+L 0x9BC6 pieza7                    Cinco filas de la casilla de 0xBE00, una debajo de otra
+C 0x9BC6 cinco filas
+L 0x9BCB pieza7_fila
+C 0x9BCD la fila siguiente: 0x60 casillas mas (0x20 en la 5)
+L 0x9BDA pieza7_ancho
+L 0x9BDD pieza7_baja
+L 0x9BE2 pieza5                    La escalera de 0xBE01: la primera fila de 0xBE01, las otras cinco de 0xBE04, cada una una casilla a la derecha; y 0x3F al final
+C 0x9BE2 seis filas
+L 0x9BEB pieza5_fila
+L 0x9BF0 pieza5_casilla
+C 0x9BF7 la fila siguiente, una casilla a la derecha (0x60 - 3 + 1)
+L 0x9C04 pieza5_ancho
+L 0x9C07 pieza5_baja
+C 0x9C0B y la casilla 0x3F
+L 0x9C0F pieza6                    La escalera de 0xBE07: igual, cada fila una casilla a la izquierda (0x60 - 3 - 1)
+L 0x9C18 pieza6_fila
+L 0x9C1D pieza6_casilla
+L 0x9C31 pieza6_ancho
+L 0x9C34 pieza6_baja
+L 0x9C3C pieza4                    4 x 4 casillas de 0xBE26
+L 0x9C41 pieza3                    4 x 4 casillas de 0xBE16
+L 0x9C44 pieza4x4
+L 0x9C46 pieza4x4_fila
+L 0x9C48 pieza4x4_casilla
+C 0x9C4F la fila siguiente: 0x60 - 4
+L 0x9C5C pieza4x4_ancho
+L 0x9C5F pieza4x4_baja
+L 0x9C64 pieza2                    3 x 3 casillas de 0xBE36
+L 0x9C69 pieza1                    3 x 3 casillas de 0xBE0D
+L 0x9C6C pieza3x3
+L 0x9C6E pieza3x3_fila
+L 0x9C70 pieza3x3_casilla
+C 0x9C77 la fila siguiente: 0x60 - 3
+L 0x9C84 pieza3x3_ancho
+L 0x9C87 pieza3x3_baja
+D 0x9C8C 0x9CD1 codigo_muerto       69 bytes de codigo que nadie llama ("ld a,(0xE19C) / and a / ret z / ld b,0 / add hl,de / djnz..."): ni call ni salto llega, y no corre en las medidas de openMSX
+L 0x9CD1 sprites_tabla             Los 14 de 0xE300 (16 bytes cada uno) a la tabla de sprites de la RAM, desde 0xE110: sus cuatro primeros bytes (Y, X, dibujo, color)
+C 0x9CD1 de 0xE300...
+C 0x9CD4 ...a 0xE110 (los cuatro primeros son del protagonista y lo que tira)
+C 0x9CD7 14
+L 0x9CE7 casilla_para                La casilla del mapa en HL y las de arriba (DE = el ancho): el agujero (0x6C) tumba al protagonista si no salta (0xE183 = 5, cae); las de 0x30-0x7F que paran devuelven la casilla en A
+C 0x9CE7 la casilla
+C 0x9CE9 el agujero (0x6C)?
+C 0x9CED la clase (mitad alta)
+C 0x9CEF 0x5x o 0x3x: para
+C 0x9CF7 la de arriba
+C 0x9CFD 0x3x o 0x4x: para
+C 0x9D05 la de mas arriba
+C 0x9D0B 0x6x o 0x7x: para
+C 0x9D13 nada: la casilla del principio
+L 0x9D15 casilla_6c
+C 0x9D15 saltando, nada
+C 0x9D1B si no, tocado (5)
+L 0x9D20 casilla_para_si
+L 0x9D22 presentacion              La presentacion de CASIO: el logotipo crece desde el centro (0xE1BA de 1 a 20, cada 3 cuadros), la musica 4 y espera 128 cuadros o el boton
+C 0x9D22 el paso 1
+C 0x9D27 0x180C y 0x1AEC: donde van las dos lineas de arriba y de abajo
+L 0x9D33 presentacion_cuadro
+C 0x9D33 el boton?
+C 0x9D47 el logotipo
+L 0x9D69 presentacion_sigue
+L 0x9D6B presentacion_musica
+C 0x9D6B la musica 4
+L 0x9D70 presentacion_espera
+C 0x9D70 el boton?
+C 0x9D76 128 cuadros
+L 0x9D7D presentacion_fin
+C 0x9D7D el boton gastado
+C 0x9D81 el sonido callado
+C 0x9D84 y la pantalla en blanco
+L 0x9D88 presentacion_lineas       Desde el paso 9: una fila del logotipo (0xA948 la de abajo, 0xA93F la de arriba) que baja desde arriba y otra que sube desde abajo, con una fila en blanco (0xBF59) detras
+C 0x9D88 el paso 9 o mas?
+C 0x9D8E 8 casillas
+C 0x9D94 en la linea que baja
+C 0x9DBB la otra linea, la que sube
+C 0x9DC1 desde abajo
+C 0x9DCD con la de abajo
+L 0x9DE5 presentacion_crece        El logotipo crece desde el centro (fila 12-13, columna 0): el paso (como mucho 9) es cuantas casillas se ven de cada mitad
+C 0x9DE5 el paso
+C 0x9DED 9 como mucho
+C 0x9DF2 la columna, hacia la izquierda
+C 0x9DFC LDIRVM
+C 0x9DFF la fila de abajo
+C 0x9E07 el paso
+C 0x9E0E 9 como mucho
+C 0x9E17 el paso
+C 0x9E23 9
+C 0x9E2F LDIRVM
+C 0x9E32 la fila de abajo
+C 0x9E37 el paso
+C 0x9E3F 9 como mucho
+L 0x9E41 presentacion_abajo2
+C 0x9E41 la fila de abajo, desde el final
+L 0x9E49 presentacion_abajo2_va
+C 0x9E4A LDIRVM
+L 0x9E4E otros_corren              La pantalla corre: los 28 de 0xE300 que estan (+4) se mueven 8 puntos al otro lado (a la izquierda si el protagonista va a la derecha, 0xE19C = 1)
+C 0x9E4E desde 0xE300
+C 0x9E52 de 16 en 16
+C 0x9E55 28
+C 0x9E57 hacia donde va?
+L 0x9E5E otros_corren_izq
+C 0x9E5E esta?
+C 0x9E64 8 a la izquierda
+L 0x9E6C otros_corren_sig
+L 0x9E71 otros_corren_der
+C 0x9E71 esta?
+C 0x9E77 8 a la derecha
+L 0x9E7F otros_corren_der_sig
+L 0x9E84 otros_bajan               En la fase 5 la pantalla corre hacia arriba: los que estan, 8 puntos abajo
+C 0x9E84 desde 0xE300
+L 0x9E8D otros_bajan_uno
+C 0x9E8D esta?
+C 0x9E93 8 abajo
+L 0x9E9B otros_bajan_sig
+L 0x9EA0 otros_suben               ...y hacia abajo: 8 puntos arriba
+C 0x9EA0 desde 0xE300
+L 0x9EA9 otros_suben_uno
+C 0x9EA9 esta?
+C 0x9EAF 8 arriba
+L 0x9EB7 otros_suben_sig
+D 0x9EBC 0x9FD5 mapa1_rle           El mapa de la fase 1 comprimido (lo descomprime 0x9AD6): un byte 0x01-0x0F es una cuenta y el siguiente se repite; los demas van tal cual; 0xFF al final
+L 0xB600 salto_objetos             Saltando (0xE194, sin 0xE192): la casilla 0x86 cuatro filas por encima del protagonista se borra (tres filas) y da 100 puntos; el pergamino (0x64) da 500 y abre el camino de la puerta (0xE1C8 = 1)
+C 0xB600 saltando?
+C 0xB606 0xE192?
+C 0xB60C cuatro filas...
+C 0xB611 ...por encima del protagonista
+C 0xB617 0x86?
+C 0xB61C borrada (0xA0)...
+C 0xB61E ...tres filas
+C 0xB628 en partida...
+C 0xB62E ...100 puntos
+L 0xB633 salto_pergamino
+C 0xB633 ya tiene el pergamino?
+C 0xB639 0xE192?
+C 0xB63F cuatro filas por encima
+C 0xB64A el pergamino (0x64)?
+C 0xB64E cogido: 0xE1C8 = 1
+C 0xB653 borrado, dos filas
+C 0xB65C 500 puntos
+L 0xB662 puerta_llega              Con el pergamino (0xE1C8 = 1): si el protagonista llega a la puerta de la fase (la casilla 0x81, en 0xEB1A, 0xEAC4, 0xEADC o 0xE865), 0xE1C8 = 2 y se abre
+C 0xB662 con el pergamino?
+C 0xB668 cuatro filas por encima
+C 0xB673 y una a la derecha
+C 0xB674 la puerta (0x81)?
+C 0xB678 la fase 1: nada
+C 0xB680 la 2: 0x1A (0xEB1A)
+L 0xB684 puerta_llega3
+C 0xB688 la 3: 0xC4 (0xEAC4)
+L 0xB68C puerta_llega4
+C 0xB690 la 4: 0xDC (0xEADC)
+L 0xB694 puerta_llega5
+C 0xB694 la 5: 0x65 (0xE865)
+L 0xB696 puerta_llega_mira
+C 0xB696 la de la fase?
+C 0xB699 si: se abre
+L 0xB69F puerta_sale               La puerta de salida (0xE1C8 de 2 a 6, un paso cada 12 cuadros): medio abierta, abierta, el protagonista entra (4 cuadros arriba a la izquierda), medio abierta y cerrada; despues 0xE186 = 1, la fase acabada
+C 0xB69F el paso 4?
+C 0xB6A6 cada 12 cuadros
+C 0xB6B4 la puerta de la fase
+C 0xB6BB la 2: 0xEB1A
+L 0xB6C0 puerta_sale3
+C 0xB6C4 la 3: 0xEAC4
+L 0xB6C9 puerta_sale4
+C 0xB6CD la 4: 0xEADC
+L 0xB6D2 puerta_sale5
+C 0xB6D2 la 5: 0xE865
+L 0xB6D5 puerta_sale_paso
+C 0xB6D5 el paso 2?
+L 0xB6DC puerta_medio              La puerta medio abierta (0xB740)
+L 0xB6E1 puerta_sale_que
+C 0xB6E1 6: cerrada
+C 0xB6E5 5: el protagonista fuera y medio abierta
+C 0xB6E9 Y 0xEE
+L 0xB6F3 puerta_cerrada            Cerrada (0xB750)
+L 0xB6F8 puerta_abierta_dib        Abierta (0xB748)
+L 0xB6FB puerta_pinta              Cuatro filas de dos casillas de DE en el mapa (HL); el paso siguiente y, al 7, la fase acabada (0xE186)
+C 0xB6FB cuatro filas
+L 0xB6FD puerta_pinta_fila
+C 0xB6FD dos casillas
+C 0xB705 la fila siguiente (el ancho - 1)
+C 0xB711 el paso siguiente
+C 0xB718 el 7?
+C 0xB71B la fase acabada
+L 0xB721 puerta_entra_prota        El paso 4: el protagonista, un punto arriba y a la izquierda por cuadro, 4 cuadros
+C 0xB72D 4 cuadros
+C 0xB737 hecho...
+C 0xB73B ...el paso siguiente
+D 0xB740 0xB758 puerta_dibujos      La puerta en el mapa, cuatro filas de dos casillas: medio abierta (0xB740), abierta (0xB748) y cerrada (0xB750)
+L 0xB758 filas_por_ancho           DE = B filas del mapa (B x el ancho, 0xE1CE)
+C 0xB758 cero...
+C 0xB75F ...+ el ancho, B veces
+C 0xB762 en DE
+D 0xB764 0xB7CC mapa5_rle           El principio del mapa de la fase 5 comprimido (como el de la 1, 0x9AD6); 0xFF al final
+L 0xB7CC mapa_blanco               El mapa (0xE700, 0x840 bytes) entero a 0xA0, la casilla en blanco
+C 0xB7CC desde 0xE700...
+C 0xB7CF ...0x840 bytes
+L 0xB7D2 mapa_blanco_casilla
+L 0xBFA1 mapa_pantalla             El mapa a la pantalla: 22 filas de 32 desde la fila 2; en las fases 1 y 5 corre de arriba abajo (0xE19A filas de 32), en las otras de lado (0xE193 columnas, filas de 0x60)
+C 0xBFA1 el mapa
+C 0xBFA4 la 5 o la 1?
+L 0xBFAF mapa_pantalla_v
+C 0xBFAF las filas corridas
+C 0xBFB6 32 casillas cada una
+L 0xBFB9 mapa_pantalla_fila
+L 0xBFBE mapa_pantalla_h
+C 0xBFBE las columnas corridas
+L 0xBFC5 mapa_pantalla_va
+C 0xBFC5 22 filas...
+C 0xBFC7 ...desde la fila 2
+L 0xBFCA mapa_pantalla_una
+C 0xBFCC 32 casillas
+C 0xBFCF LDIRVM
+C 0xBFD2 la fila siguiente de la pantalla
+C 0xBFD8 y la del mapa: 0x20 (fases 1 y 5) o 0x60
+L 0xBFE8 mapa_pantalla_32
+L 0xBFEB mapa_pantalla_sig
+D 0xBFF0 0xC000 relleno_final       El final del cartucho: ceros y un 0x80 sueltos (sin lectura)
+L 0x923E protagonista              El protagonista, cada cuadro: la estrella en vuelo, el cofre (0xE1C3), la puerta de salida; lo que coge saltando; el tiempo del objeto 0x6A (0xE1B4); y, si no esta tocado, tirar (boton A), saltar (boton B) o andar
+C 0x923E una estrella en vuelo?
+C 0x9242 se mueve
+C 0x9245 el cofre abriendose?
+C 0x9249 un paso
+C 0x924C la puerta de salida (0xE1C8 de 2 en adelante)?
+C 0x9251 solo eso
+C 0x9254 lo que coge saltando
+C 0x9257 el objeto 0x6A en marcha?
+C 0x925E un cuadro mas (0xE1B5)...
+C 0x9262 ...cada 256, 0xE1B6
+C 0x9265 3 x 256 cuadros?
+C 0x9269 se acaba: 0xE1B4-0xE1B6 a 0
+L 0x926C protagonista_objeto_fin
+L 0x9270 protagonista_mira
+C 0x9270 tocado: nada mas
+C 0x9275 ya hay una estrella?
+C 0x927B el boton A (tirar)?
+C 0x9281 0xE1D0 = 2...
+C 0x9288 ...y el de 0xE320 a la altura del protagonista: no tira
+C 0x9290 el boton gastado
+L 0x9296 tira                      Tira una estrella: hacia donde mira (en la fase 1, hacia la palanca o la ultima direccion); el efecto 4
+C 0x9296 la fase 1?
+C 0x929D hacia donde mira
+L 0x92A5 tira_fase1
+C 0x92A5 la palanca...
+C 0x92AC ...o, quieta, la ultima direccion (0xE1D2)
+L 0x92B4 tira_efecto
+C 0x92B4 el efecto 4
+C 0x92B9 con el objeto 0x6A en la fase 2: otra estrella (dibujo 0xB0, color 15) a la altura del protagonista
+C 0x92C6 su Y
+C 0x92CC el dibujo 0xB0...
+C 0x92D0 ...color 15
+C 0x92D4 0xE1B7 = 1
+L 0x92DB tira_normal               La de siempre: dibujo 0xA4, color 5, 8 puntos por debajo
+C 0x92DB 0xE1B7 = 0
+C 0x92DF la Y + 8
+C 0x92E7 el dibujo 0xA4...
+C 0x92EB ...color 5
+L 0x92EF tira_x
+C 0x92EF la X del protagonista
+L 0x92F5 protagonista_salta        ¿Saltando? Sigue el salto; si no, el boton B empieza uno (salvo a mitad de paso, fuera de la fase 1)
+C 0x92F5 saltando?
+C 0x92F9 sigue
+C 0x92FC la fase 1?
+C 0x9303 a mitad de un paso?
+L 0x9309 protagonista_boton_b
+C 0x9309 el boton B?
+C 0x930D salta
+L 0x9310 protagonista_anda         Andar: en la fase 1, en ocho direcciones (0x95EA); en las otras, por el piso y las escaleras
+C 0x9310 la fase 1?
+C 0x9318 la palanca
+L 0x931E protagonista_quieto       Quieto: si estaba agachado (0xE1BE), de pie otra vez
+C 0x931E agachado?
+C 0x9323 ya no
+C 0x9327 de pie
+L 0x932A anda                      A mitad de un paso (0xE19E de 1 a 7)? lo sigue hacia su lado; si no, la palanca decide
+C 0x932A a mitad de paso?
+C 0x9330 hacia la izquierda (6 o mas)?
+C 0x9338 hacia la derecha
+L 0x933B anda_palanca              La palanca: arriba o abajo solo valen en una escalera (0xE198: 1 la que sube a la derecha, 2 la que sube a la izquierda), y abajo fuera de ella agacha
+C 0x933B quieta?
+C 0x933F la direccion
+C 0x9342 arriba?
+C 0x9346 abajo?
+C 0x934A en una escalera?
+C 0x934E no: agachado
+C 0x9351 en la 1: abajo es a la izquierda (7)...
+L 0x9359 anda_abajo2
+C 0x9359 ...en la 2, a la derecha (3)
+L 0x935D anda_arriba               Arriba: en la escalera 1, a la derecha (3); en la 2, a la izquierda (7); fuera, nada
+C 0x935D en una escalera?
+C 0x9361 no: quieto
+L 0x936B anda_arriba2
+L 0x936D anda_dir
+C 0x936D la direccion nueva
+L 0x9371 anda_derecha              A la derecha (2, 3 o 4): mira a la derecha, el efecto 7, un paso; un muro (0x40) arriba a la derecha lo para
+C 0x9371 a la izquierda?
+C 0x9376 mira a la derecha
+C 0x937B el efecto 7 (el paso)
+C 0x9380 un punto del paso
+C 0x9387 la casilla de la derecha...
+C 0x938B ...la de arriba es un muro?
+L 0x9391 anda_der_mueve            Corre la pantalla o se mueve el sprite
+C 0x9391 corre la pantalla?
+L 0x9398 anda_der_sprite           El sprite un punto a la derecha (hasta 0xEC)
+C 0x9398 en el borde?
+C 0x939F parado
+L 0x93A6 anda_der_punto
+C 0x93A6 un punto a la derecha
+L 0x93AF muro_mira                 ¿Muro? La casilla de arriba (HL - el ancho) es 0x40: el paso parado (0xE19E = 0); Z si lo es
+C 0x93AF una fila arriba
+C 0x93B7 0x40?
+C 0x93BA parado
+L 0x93BF anda_der_sigue            Sigue el paso a la derecha: 8 puntos por casilla; al octavo, la casilla siguiente segun la direccion (3 llano, 2 sube, 4 baja) o la escalera
+C 0x93BF el efecto 7
+C 0x93C4 un punto mas
+C 0x93CB 8: la casilla siguiente
+C 0x93CF el paso a 0
+C 0x93D3 en una escalera?
+C 0x93D9 la casilla de la derecha: un agujero?
+C 0x93E0 la direccion
+C 0x93E3 llano?
+L 0x93E7 anda_der_casilla          Una casilla a la derecha en el mapa (0xE18A); si corre la pantalla, una columna mas (0xE193) y los otros a la izquierda
+C 0x93E7 una casilla...
+C 0x93EB ...a la derecha
+C 0x93EE corre la pantalla?
+C 0x93F4 una columna mas
+C 0x93F8 los otros 8 a la izquierda
+L 0x93FE anda_der_sube             Arriba a la derecha: el pie de la escalera 1 (0x39, arriba a la derecha) la empieza
+C 0x93FE arriba a la derecha?
+C 0x9402 la casilla de arriba a la derecha...
+C 0x940D ...el pie de la escalera (0x39)?
+C 0x9413 en la escalera 1, paso 0
+L 0x941D anda_der_baja             Abajo a la derecha: la casilla 0x32 es lo alto de la escalera 2; un piso menos (0xE190), paso 6
+C 0x941D abajo a la derecha?
+C 0x9420 ya en una escalera?
+C 0x9426 la casilla...
+C 0x9429 ...0x32?
+C 0x942F la escalera 2...
+C 0x9434 ...desde arriba (6)
+C 0x9439 un piso menos
+L 0x943F escalera_der              En la escalera hacia la derecha: el efecto 6; en la 1 sube, en la 2 baja
+C 0x943F el efecto 6
+C 0x9444 la 1?
+L 0x944B escalera_der_sube         Sube: un peldano mas (0xE199); al sexto, fuera de la escalera y un piso mas (0xE190)
+C 0x944B un peldano mas
+C 0x9450 el sexto?
+C 0x9454 fuera de la escalera
+C 0x9457 un piso mas
+L 0x945D escalera_der_baja         Baja: un peldano menos; al cero, fuera
+C 0x945D un peldano menos
+C 0x9463 fuera
+L 0x9468 escalera_sube_8           Sube 8 puntos: en la fase 5 corre la pantalla (0xE19A, y los otros abajo); si no, el sprite. Y una fila arriba en el mapa
+C 0x9468 la fase 5?
+C 0x946F una fila arriba
+C 0x9473 los otros, 8 abajo
+L 0x9478 escalera_sube_sprite
+C 0x9478 el sprite 8 arriba
+L 0x947B escalera_sube_fila
+C 0x947B una fila arriba en el mapa
+C 0x947E y una casilla a la derecha
+L 0x9481 escalera_baja_8           Baja 8 puntos: en la fase 5 corre la pantalla; si no, el sprite. Y una fila abajo
+C 0x9481 la fase 5?
+C 0x9488 una fila abajo
+C 0x948C los otros, 8 arriba
+L 0x9491 escalera_baja_sprite
+C 0x9491 el sprite 8 abajo
+L 0x9494 escalera_baja_fila
+C 0x9494 una fila abajo en el mapa
+C 0x9497 y una casilla a la derecha
+L 0x949A anda_izquierda            A la izquierda (6, 7 u 8): mira a la izquierda, el efecto 7 y un paso; un muro arriba a la izquierda lo para
+C 0x949A mira a la izquierda
+C 0x949F el efecto 7
+C 0x94A4 un punto del paso
+C 0x94A8 la casilla de la izquierda...
+C 0x94B3 ...la de arriba es un muro (0x40)?
+C 0x94B8 parado
+L 0x94BF anda_izq_mueve
+C 0x94BF corre la pantalla?
+L 0x94C6 anda_izq_sprite           El sprite un punto a la izquierda (hasta 5)
+C 0x94C6 en el borde?
+C 0x94CD parado
+L 0x94D4 anda_izq_punto
+C 0x94D4 un punto a la izquierda
+L 0x94DD anda_izq_sigue            Sigue el paso a la izquierda: al octavo, la casilla siguiente (7 llano, 6 baja, 8 sube) o la escalera
+C 0x94DD el efecto 7
+C 0x94E2 un punto mas
+C 0x94E9 8?
+C 0x94ED el paso a 0
+C 0x94F1 en una escalera?
+C 0x94F7 la casilla de la izquierda: un agujero?
+C 0x94FE la direccion
+C 0x9501 llano?
+L 0x9505 anda_izq_casilla          Una casilla a la izquierda (0xE18A); si corre la pantalla, una columna menos y los otros a la derecha
+C 0x9505 una casilla...
+C 0x9509 ...a la izquierda
+C 0x950C corre la pantalla?
+C 0x9513 una columna menos
+C 0x9517 los otros 8 a la derecha
+L 0x951D anda_izq_baja             Abajo a la izquierda: la casilla 0x35 es lo alto de la escalera 1; un piso menos, paso 6
+C 0x951D abajo a la izquierda?
+C 0x9521 ya en una escalera?
+C 0x9527 la casilla...
+C 0x952A ...0x35?
+C 0x952F la escalera 1...
+C 0x9535 ...desde arriba (6)
+C 0x9537 un piso menos
+L 0x953D anda_izq_sube             Arriba a la izquierda: el pie de la escalera 2 (0x3A) la empieza
+C 0x953D arriba a la izquierda?
+C 0x9540 la casilla de arriba a la izquierda...
+C 0x954B ...0x3A?
+C 0x9551 en la escalera 2, paso 0
+L 0x955B escalera_izq              En la escalera hacia la izquierda: el efecto 6; en la 1 baja, en la 2 sube
+C 0x955B el efecto 6
+C 0x9560 la 1?
+L 0x9567 escalera_izq_baja         Baja: un peldano menos; al cero, fuera
+C 0x9567 un peldano menos
+C 0x956E fuera
+L 0x9573 escalera_izq_sube         Sube: un peldano mas; al sexto, fuera y un piso mas
+C 0x9573 un peldano mas
+C 0x9577 el sexto?
+C 0x957D fuera
+C 0x9580 un piso mas
+L 0x9586 escalera_izq_baja_8       Baja 8 puntos (la pantalla en la fase 5, el sprite en las otras) y una fila abajo
+C 0x9586 la fase 5?
+C 0x958D una fila abajo
+L 0x9596 escalera_izq_baja_spr
+L 0x9599 escalera_izq_baja_fila
+C 0x959C y una casilla a la izquierda
+L 0x959F escalera_izq_sube_8       Sube 8 puntos y una fila arriba
+C 0x959F la fase 5?
+C 0x95A6 una fila arriba
+L 0x95AF escalera_izq_sube_spr
+L 0x95B2 escalera_izq_sube_fila
+C 0x95B5 y una casilla a la izquierda
+L 0x95B8 mapa_fila_abajo           El protagonista una fila abajo en el mapa (0xE18A + el ancho)
+L 0x95C4 mapa_fila_arriba          Una fila arriba (0xE18A - el ancho)
+L 0x95D2 prota_sube8               Los dos sprites del protagonista, 8 puntos arriba
+C 0x95D2 la Y - 8
+L 0x95DE prota_baja8               Y 8 abajo
+C 0x95DE la Y + 8
+L 0x95EA anda_fase1                En la fase 1, delante del castillo: ocho direcciones, un punto por cuadro, entre Y 0x50 y 0x97 y X 8 y 0xE8
+C 0x95EA quieta: nada
+C 0x95EF la ultima direccion
+C 0x95F2 el efecto 7
+C 0x95F7 derecha?
+C 0x95FF izquierda?
+C 0x9604 arriba?
+L 0x9608 fase1_arriba
+C 0x9608 arriba del todo (0x50)?
+C 0x9610 un punto arriba
+L 0x9619 fase1_abajo
+C 0x9619 abajo?
+L 0x961D fase1_abajo_va
+C 0x961D abajo del todo (0x97)?
+C 0x9625 un punto abajo
+L 0x962E fase1_diagonal            Las diagonales: primero el lado y despues arriba o abajo
+C 0x962E a la izquierda (6, 8)?
+C 0x9632 2 o 4: a la derecha
+C 0x9637 en el borde (0xE8)?
+C 0x963E un punto a la derecha
+L 0x9644 fase1_der_y
+C 0x9644 arriba a la derecha?
+C 0x964C 4: abajo (el cp no sirve: salta igual)
+L 0x9651 fase1_izq
+C 0x9651 a la izquierda
+C 0x9656 en el borde (8)?
+C 0x965D un punto a la izquierda
+L 0x9663 fase1_izq_y
+C 0x9663 abajo a la izquierda?
+C 0x966B 8: arriba
+L 0x966E prota_dibujo              Los dibujos del protagonista andando: 0x28/0x30 a la derecha, 0x00/0x08 a la izquierda (cambian cada 8 cuadros); con el objeto 0x6A desde la fase 4, un solo sprite
+C 0x966E hacia donde mira?
+L 0x9675 prota_dibujo_der
+C 0x9675 a la derecha: 0x28
+L 0x967B prota_dibujo_izq
+C 0x967B a la izquierda: 0
+L 0x967F prota_dibujo_va
+C 0x967F mira a ese lado
+C 0x9682 + 8 cada 8 cuadros
+C 0x9689 la fase 4 o mas...
+C 0x9690 ...con el objeto 0x6A?
+C 0x9696 el dibujo + 4 en el primer sprite...
+C 0x969C ...y el segundo fuera
+L 0x96A0 prota_dibujo_fin
+C 0x96A0 ya no agachado
+L 0x96A5 prota_dibujo_dos          Los dos sprites: el dibujo y el + 4 encima, a la misma Y
+C 0x96A5 el primero
+C 0x96A8 el segundo, + 4
+C 0x96AE a la misma Y
+L 0x96B6 estrella                  La estrella en vuelo (0xE108): dibujo 0xA4/0xA8 y 3 puntos por cuadro; con el objeto 0x6A en la fase 2, 0xB0/0xB4 y 1 punto; en la fase 1, en ocho direcciones; fuera de la pantalla, se acaba
+C 0x96B6 el objeto 0x6A...
+C 0x96BC ...en la fase 2...
+C 0x96C3 ...con la estrella grande?
+C 0x96C9 el dibujo 0xB0, 1 punto
+L 0x96CF estrella_normal
+C 0x96CF el dibujo 0xA4, 3 puntos
+C 0x96D3 era la grande?
+C 0x96D9 color 5...
+C 0x96DD ...8 puntos abajo
+C 0x96E5 ya no
+L 0x96E9 estrella_vuela
+C 0x96E9 + 4 cada 4 cuadros: gira
+C 0x96F2 la fase 1?
+C 0x96F9 hacia la derecha?
+L 0x9700 estrella_der
+C 0x9700 C puntos a la derecha
+L 0x9709 estrella_izq
+C 0x9709 C puntos a la izquierda
+L 0x9710 estrella_borde
+C 0x9710 fuera por la izquierda (menos de 4)...
+C 0x9717 ...o por la derecha (0xF0)?
+L 0x971C estrella_fase1            En la fase 1, ocho direcciones a 3 puntos
+C 0x971C 3 puntos
+C 0x971E derecha?
+C 0x9725 izquierda?
+C 0x9729 arriba?
+L 0x972D estrella_sube
+C 0x972D 3 arriba
+L 0x9736 estrella_borde_y
+C 0x9736 (el cp 0 nunca da C)
+C 0x973D abajo del todo (0xA8)?
+L 0x9743 estrella_diag
+C 0x9743 arriba a la derecha
+L 0x974C estrella_diag4
+C 0x974C abajo a la derecha
+L 0x9755 estrella_abajo
+C 0x9755 abajo
+L 0x9759 estrella_baja
+C 0x9759 3 abajo
+L 0x9764 estrella_diag6
+C 0x9764 abajo a la izquierda
+L 0x976D estrella_diag8
+C 0x976D arriba a la izquierda
+L 0x9772 estrella_fin              Se acaba: 0xE19B a 0, el sprite fuera y el boton A gastado
+C 0x9772 sin estrella
+C 0x9776 fuera (Y 0xF0)
+C 0x9783 el boton A gastado
+L 0x9789 salto                     Empieza un salto (boton B), salvo con la palanca abajo o en una escalera: el efecto 5; hacia la derecha (palanca 2-4), la izquierda (6-8) o arriba
+C 0x9789 la palanca abajo?
+C 0x9790 en una escalera?
+L 0x9796 salto_no
+C 0x9796 el boton gastado
+L 0x979B salto_empieza
+C 0x979B el efecto 5
+C 0x97A0 saltando
+C 0x97A5 el paso a 0
+C 0x97A9 la palanca: 0 o 1?
+C 0x97B0 5 o mas?
+C 0x97B4 2-4: a la derecha
+C 0x97BE salto a la derecha (0xE197 = 1)
+L 0x97C3 salto_izq
+C 0x97C3 6-8: a la izquierda
+C 0x97CD salto a la izquierda (0xE197 = 2)
+L 0x97D2 salto_arriba
+C 0x97D2 salto en el sitio
+L 0x97D6 salto_cuadro              Un cuadro del salto (0xE196 sube a 0x1B y baja a 0): los primeros 8 pasos 2 puntos, luego 1, luego uno de cada dos; arriba del todo se cogen las cosas
+C 0x97D6 bajando?
+C 0x97DC la cuenta de subida
+C 0x97DF arriba del todo?
+L 0x97E3 salto_sube
+C 0x97E3 un paso mas
+C 0x97E7 del 1 al 8...
+C 0x97EB ...un punto arriba...
+C 0x97F1 ...y otro: dos por cuadro
+L 0x97F8 salto_sube1
+C 0x97F8 del 9 al 16: uno
+L 0x9805 salto_sube_lento
+C 0x9805 del 17 al 24: uno de cada dos
+L 0x9815 salto_arriba_del_todo     Arriba del todo: ya baja (0xE195)
+L 0x981F salto_mira_sube
+L 0x9821 salto_baja                Bajando: lo mismo al reves; al llegar a 0, cae al suelo
+C 0x9821 la cuenta
+C 0x9824 en el suelo?
+C 0x9828 un paso menos
+C 0x982C del 24 al 27: quieto
+L 0x9832 salto_baja_lento
+C 0x9832 del 16 al 23: uno de cada dos
+C 0x983A un punto abajo
+L 0x9840 salto_coge                Arriba: el cofre (0x61, cinco filas por encima) empieza a abrirse; el objeto 0x6A (cuatro filas por encima) se coge: 0xE1B4 y 100 puntos
+C 0x9840 la casilla del protagonista
+C 0x9843 (estas comparaciones no cambian nada: todos los caminos llegan a 0x9858 igual)
+L 0x984D salto_coge_va
+L 0x984F salto_coge_mira
+L 0x9858 salto_coge_casilla
+C 0x9859 cinco filas...
+C 0x9860 ...por encima
+C 0x9863 el cofre (0x61)?
+C 0x9867 una fila mas abajo
+C 0x986D el objeto 0x6A?
+C 0x9872 cogido: 0xE1B4 + 1
+C 0x9879 borrado
+C 0x987B en partida...
+C 0x9882 ...100 puntos
+L 0x988A salto_cofre               El cofre empieza a abrirse: 0xE1C3 = 1, 0xE192 = 1 y donde esta (0xE1C5)
+C 0x988A la cuenta del cofre a 0
+C 0x988E el cofre en marcha
+C 0x9895 donde
+L 0x989B salto_baja_rapido         Del 8 al 15: un punto; del 7 abajo, dos
+C 0x989B 8 o mas?
+C 0x989F un punto abajo
+L 0x98A7 salto_baja2
+C 0x98A7 un paso mas
+C 0x98AB dos puntos abajo
+L 0x98BA salto_suelo               En el suelo: los dibujos de estar de pie; si fue en el sitio, mira la casilla 0x6C; se acaba el salto
+C 0x98BA (este HL no se usa)
+C 0x98BD hacia donde mira?
+C 0x98C4 la fase 4 o mas con el objeto 0x6A: un sprite
+C 0x98D1 0x2C...
+C 0x98D5 ...y el segundo fuera
+L 0x98DB salto_suelo_der
+C 0x98DB 0x28 y 0x2C
+L 0x98E9 salto_suelo_der2
+C 0x98E9 (el inc hl no sirve: HL se carga otra vez en 0x991A)
+L 0x98F3 salto_suelo_izq
+C 0x98F3 a la izquierda: la fase 4 o mas con el objeto, un sprite
+C 0x9900 0x04 y el segundo fuera
+L 0x990A salto_suelo_izq2
+C 0x990A 0x00 y 0x04
+L 0x9912 salto_suelo_izq3
+L 0x991A salto_fin
+C 0x991A la casilla del protagonista
+C 0x991D fue en el sitio?
+L 0x9925 salto_fin_sitio
+C 0x9929 un agujero?
+L 0x992C salto_fin_todo
+C 0x992C se acaba el salto
+C 0x9939 el boton B gastado
+L 0x993D salto_lado                El salto de lado (0xE197): un punto por cuadro hacia su lado, 8 por casilla, con el muro y la pantalla como al andar
+C 0x993D en el sitio?
+C 0x9944 a la derecha?
+C 0x9948 un punto mas
+C 0x994F el primero?
+C 0x9953 la casilla de arriba a la derecha...
+C 0x995F ...un muro?
+L 0x9963 salto_lado_para
+C 0x9963 parado: ya en el sitio
+L 0x996D salto_der_mueve
+C 0x996D corre la pantalla?
+L 0x9976 salto_der_sprite
+C 0x9976 en el borde?
+C 0x997D un punto a la derecha
+L 0x9986 salto_der_sigue
+C 0x9986 8?
+C 0x998A la casilla siguiente
+C 0x9995 corre la pantalla?
+C 0x999B una columna mas
+C 0x99A2 los otros a la izquierda
+L 0x99A8 salto_izq_lado            A la izquierda
+C 0x99A8 un punto mas
+C 0x99AF el primero?
+C 0x99B3 la casilla de arriba a la izquierda...
+C 0x99BF ...un muro?
+L 0x99C3 salto_izq_para
+L 0x99CC salto_izq_mueve
+C 0x99CC corre la pantalla?
+L 0x99D2 salto_izq_sprite
+C 0x99D2 en el borde?
+C 0x99D9 un punto a la izquierda
+L 0x99E1 salto_izq_sigue
+C 0x99E1 8?
+C 0x99E9 la casilla siguiente
+C 0x99F0 corre la pantalla?
+C 0x99F6 una columna menos
+C 0x99FD los otros a la derecha
+L 0x9A00 salto_dibujo              Los dibujos del salto: en el sitio 0x40 (derecha) o 0x18 (izquierda); de lado, 0x38 o 0x10
+C 0x9A00 de lado?
+C 0x9A06 hacia donde mira?
+C 0x9A0D 0x40
+L 0x9A11 salto_dibujo_izq
+C 0x9A11 0x18
+L 0x9A13 salto_dibujo_pon
+C 0x9A16 la fase 4 o mas con el objeto: un sprite
+C 0x9A23 el dibujo + 4...
+C 0x9A29 ...y el segundo fuera
+L 0x9A2E salto_dibujo_dos
+C 0x9A2E el primero
+C 0x9A32 el segundo, + 4
+C 0x9A37 a la misma Y
+L 0x9A3E salto_dibujo_lado
+C 0x9A3E hacia donde mira?
+C 0x9A45 0x38
+L 0x9A49 salto_dibujo_lado_izq
+C 0x9A49 0x10
+L 0xA8F0 agacha                    Agachado (la palanca abajo fuera de una escalera): 0xE1BE = 1 y los dibujos 0x48/0x4C (derecha) o 0x20/0x24 (izquierda)
+C 0xA8F0 en una escalera: nada
+C 0xA8F5 agachado
+C 0xA8F9 el objeto 0x6A?
+L 0xA8FF agacha_dos
+C 0xA8FF los dos sprites a la misma Y
+C 0xA905 hacia donde mira?
+C 0xA90C 0x48 y 0x4C
+L 0xA915 agacha_izq
+C 0xA915 0x20 y 0x24
+L 0xA91E agacha_objeto
+C 0xA91E la fase 4 o mas?
+C 0xA925 hacia donde mira?
+C 0xA92C 0x4C y el segundo fuera
+L 0xA935 agacha_objeto_izq
+C 0xA935 0x24 y el segundo fuera
+L 0x9FD5 cofre                     El cofre (0x61) abriendose, un paso cada 3 cuadros (0xE1C3 de 1 a 4): en el primero se decide que sale (0xE1BF) y, si es 0 o 1, se abre un agujero (casillas 0x6C) en el piso; luego cuatro dibujos de 4 x 4 y el efecto
+C 0x9FD5 cada 3 cuadros
+C 0x9FDF la cuenta a 0
+C 0x9FE3 el primer paso?
+C 0x9FEA un cofre mas abierto (0xE1CA)
+C 0x9FF4 el cofre que da la 2 en cada fase: el 10 en la fase 2...
+L 0x9FFF cofre_fase3
+C 0xA003 ...el 18 en la 3...
+L 0xA007 cofre_fase4
+C 0xA00B ...el 20 en la 4...
+L 0xA00F cofre_fase5
+C 0xA00F ...y el 9 en la 5
+L 0xA011 cofre_cual
+C 0xA011 es ese?
+C 0xA014 si: sale la 2
+L 0xA018 cofre_azar
+C 0xA018 si no, al azar: 0-3...
+C 0xA01D ...el 2 no vale: 0 o 1 segun otro bit
+L 0xA026 cofre_sale
+C 0xA026 lo que sale
+C 0xA02C 0 o 1: el agujero
+C 0xA030 cinco filas mas abajo del cofre
+C 0xA039 la fase: cuantas casillas
+L 0xA040 cofre_suelo               Busca en esa fila un tramo de casillas 0xB0 (el piso) tan largo como la fase, hacia un lado al azar, y lo llena de agujero (0x6C)
+C 0xA040 el piso (0xB0)?
+L 0xA04A cofre_suelo_otro
+C 0xA04B hacia la derecha o la izquierda
+L 0xA052 cofre_suelo_izq
+L 0xA057 cofre_suelo_pon
+L 0xA05B cofre_suelo_6c
+C 0xA05B 0x6C
+L 0xA060 cofre_dibujo              El dibujo del paso: los de 0xA110 (sale 0), 0xA150 (1), 0xA0D0 (2) o 0xBF61 (3), 16 bytes por paso
+C 0xA060 lo que sale
+C 0xA06E 3: 0xBF61
+L 0xA073 cofre_dib0
+C 0xA073 0: 0xA110
+L 0xA078 cofre_dib1
+C 0xA078 1: 0xA150
+L 0xA07D cofre_dib2
+C 0xA07D 2: 0xA0D0
+L 0xA080 cofre_dib_paso
+C 0xA080 + (paso - 1) x 16
+L 0xA08A cofre_dib_suma
+L 0xA08D cofre_pinta               4 x 4 casillas en el mapa, donde esta el cofre (0xE1C5)
+C 0xA08E donde esta
+C 0xA091 cuatro filas
+L 0xA093 cofre_pinta_fila
+L 0xA095 cofre_pinta_casilla
+C 0xA09B la fila siguiente (el ancho - 4)
+C 0xA0A9 el paso siguiente
+C 0xA0B0 el quinto: acabado
+C 0xA0B3 lo que salio: 0 o 1, el efecto 6
+L 0xA0BE cofre_efecto2
+C 0xA0BE 2: el efecto 4
+L 0xA0C6 cofre_efecto3
+C 0xA0C6 3: el efecto 5
+L 0xA0C8 cofre_fin
+C 0xA0C8 el efecto
+C 0xA0CB el cofre, acabado
+D 0xA0D0 0xA110 cofre_dib2_tabla    El cofre que da la 2 (el que toca en cada fase): cuatro pasos de 4 x 4 casillas
+D 0xA110 0xA150 cofre_dib0_tabla    El cofre 0: cuatro pasos de 4 x 4 casillas
+D 0xA150 0xA190 cofre_dib1_tabla    El cofre 1: cuatro pasos de 4 x 4
+D 0xA190 0xA210 relleno_a190        128 bytes sin lectura: 19 de casillas como las del cofre y luego 0xFB 0x00 / 0xFF 0x00 alternados; los dibujos del cofre acaban en 0xA18F (el paso 4 de 0xA150)
+D 0xA210 0xA234 tabla_musicas       Las musicas 0-5 (0 callada), tres punteros cada una (los canales A, B y C)
+F 0xA210 w3
+D 0xA234 0xA244 tabla_efectos_a     Los efectos 0-7 en el canal A: un puntero cada uno
+F 0xA234 w8
+D 0xA244 0xA264 tabla_efectos_bc    Los efectos 0-7 en los canales B y C: dos punteros cada uno
+F 0xA244 w2
+L 0xA264 efecto_a_pide             Pide el efecto A del canal A (0xE2C0), solo en partida, con la misma regla: se queda el de numero mas bajo
+C 0xA264 el numero
+C 0xA265 en partida?
+C 0xA26B el efecto del canal A pedido
+L 0xA2A7 sonido_musica_sigue       Una musica sonando: si la pedida tiene numero mas bajo, empieza
+C 0xA2A7 la pedida gana?
+L 0xA2AF sonido_efecto_a_sigue     Un efecto en el canal A: igual
+L 0xA2B7 sonido_efecto_bc_sigue    Un efecto en B y C: igual
+L 0xA324 sonido_canal_c            El canal C
+L 0xA463 canal_va                  El canal A (0, 1 o 2) en 0xE2D5 y un paso
+L 0xA46A pide_gana                 ¿La pedida (HL + 1) gana a la que suena (HL)? C si es menor; Z si no hay pedida
+C 0xA46A la que suena
+C 0xA46C la pedida
+L 0xA471 canal_cuenta              La nota en marcha: un cuadro menos; con envolvente (+3 la espera, +4 el volumen), el volumen baja uno cada tanto
+C 0xA471 la duracion...
+C 0xA472 ...un cuadro menos
+C 0xA476 sin envolvente?
+L 0xA529 nota_tono                 El tono de la nota: un byte (el registro B) o dos si el primero es menor de 0x10 (B + 1 el alto)
+C 0xA52A el primer byte
+C 0xA52B 0x10 o mas: solo el bajo
+C 0xA52F el alto
+L 0xA534 nota_tono_bajo
+C 0xA534 el bajo
+D 0xA539 0xA547 duraciones          Las duraciones de las notas (la mitad alta de la nota, 0-13): 0x80, 0x60, 0x40... 1 cuadros
+L 0xA59B borra_b                   B bytes a cero desde HL
+C 0xA59B a cero
+L 0xA5A1 efecto_a_empieza          Un efecto en el canal A (la tabla 0xA234): la musica pierde el canal A mientras suena
+C 0xA5A1 la tabla
+C 0xA5A4 el pedido...
+C 0xA5A7 ...es el que suena
+C 0xA5AA x 2
+C 0xA5AE sin nota en marcha
+C 0xA5B2 el pedido, gastado
+C 0xA5B5 el canal A con tono
+L 0xA5C6 efecto_a_acaba            Acaba el efecto del canal A: otro pedido, o el canal A callado
+C 0xA5C6 otro pedido?
+C 0xA5CC ya no hay
+C 0xA5CF el canal A a cero
+C 0xA5D7 el canal A callado
+L 0xA5DC mezcla_pon
+L 0xA5E2 efecto_empieza            Un efecto en los canales B y C (la tabla 0xA244)
+C 0xA5E2 la tabla
+C 0xA5E5 el pedido es el que suena
+C 0xA5EB x 4
+C 0xA5F2 el pedido, gastado
+C 0xA5F5 B y C con tono
+D 0xA642 0xA7F2 musicas_datos       Las notas de las musicas y los efectos (tablas 0xA210, 0xA234 y 0xA244): notas con la duracion en la mitad alta y el volumen en la baja, ordenes 0xF0-0xFF
+D 0xA7F2 0xA800 relleno_a7f2        14 bytes sin lectura (0xFB 0x00 alternados) hasta los dibujos de las casillas
+D 0xA800 0xA8F0 casillas_dibujos1   Los dibujos de las casillas 0x30-0x4D: el principio de los 0x600 bytes (0xA800-0xADFF) que pantalla_juego copia a la casilla 0x30 de cada tercio; las 0x4E-0x59 salen de lo que sigue (el codigo de 0xA8F0 y el logotipo)
+D 0xA93E 0xA951 logotipo_casio      Las dos filas de casillas del logotipo de CASIO de la presentacion: 0xA93F la de arriba y 0xA948 la de abajo (nueve cada una)
+D 0xA951 0xAE00 casillas_dibujos2   Los dibujos de las casillas 0x5A-0xEF
+D 0xAE00 0xB000 titulo_dibujos      Los dibujos de las casillas 0x40-0x7F del titulo (0x200 bytes): los kanji grandes, el logotipo y CASIO
+D 0xB000 0xB600 casillas_colores    Los colores de las casillas 0x30-0xEF (0x600 bytes), a 0x2180 en cada tercio
+D 0xB7DB 0xB800 relleno_b7db        37 bytes sin lectura (0xF0 y 0xFF) delante de los dibujos de los sprites
+D 0xB800 0xBE00 sprites_dibujos_d   Los dibujos de los sprites (de 16 x 16, 32 bytes): el protagonista 0x00-0x4C, la estrella 0xA4/0xA8 y 0xB0/0xB4, los otros; sprites_dibujos copia 0xB800-0xBFFF a 0x3800, con lo que sigue (piezas y codigo) como dibujos 0xC0-0xFF que no se usan
+D 0xBE00 0xBE3F piezas_casillas     Las casillas de las piezas del mapa: 0xBE00 (0x40, el muro), las escaleras (0xBE01-0xBE0C), 3 x 3 de 0xBE0D, 4 x 4 del cofre (0xBE16, el 0x61 arriba a la izquierda), 4 x 4 de la puerta (0xBE26) y 3 x 3 con el objeto 0x6A (0xBE36)
+D 0xBE3F 0xBE47 piezas_fases        Las listas de piezas de las fases 2 a 5
+F 0xBE3F w4
+D 0xBE47 0xBF53 piezas_listas       Las listas: por clase, cuantas y las direcciones del mapa donde va cada pieza
+D 0xBF53 0xBF59 fila_bf53           Las seis casillas que se repiten en las filas 4 y 5 del mapa de las fases 2 a 4
+D 0xBF59 0xBF61 fila_blanco         Ocho espacios (0x10): la fila en blanco detras del logotipo de la presentacion
+D 0xBF61 0xBFA1 cofre_dib3_tabla    El cofre 3: cuatro pasos de 4 x 4
+C 0x813F la vuelta 0
+C 0x8142 la vida de los 3000, sin dar
+C 0x8157 una cifra a 0
+C 0x8250 la tabla de sprites a la VRAM
+C 0x8253 los otros a la tabla
+C 0x8256 el protagonista
+C 0x8259 el mapa a la pantalla
+C 0x825C salen otros?
+C 0x825F los otros se mueven
+C 0x8262 las cifras del marcador
+C 0x8265 TIME
+C 0x8268 el sonido del objeto 0x6A
+C 0x826B la salida de la fase 1
+C 0x827D la fase 1?
+C 0x8283 la puerta abierta (0xE1D1)?
+C 0x828B por encima de 0x52?
+C 0x8291 X 0x79-0x7D?
+C 0x829D el objeto 0x6A en marcha?
+C 0x82A2 el efecto 2 (mientras dura)
+C 0x82A8 la cuenta
+C 0x82B3 pasada de 0xC0: a 0
+L 0x82B8 salen_cuenta_pon
+C 0x82B8 la cuenta nueva
+C 0x82BC la cuenta guardada
+C 0x82BD la fase 1?
+C 0x82C4 no: sigue la cuenta
+C 0x82C7 desde el segundo (0xE314)...
+C 0x82CA ...de 16 en 16...
+C 0x82CD ...seis huecos
+C 0x82CF libre?
+C 0x82D5 la cuenta
+C 0x82D8 el siguiente
+C 0x82DB ninguno libre
+C 0x82E2 la fase
+C 0x82E6 la fase 1?
+C 0x82EA 16 + el azar
+C 0x82EF la fase...
+C 0x82F0 ...8...
+C 0x82F2 ...+ 8 por fase
+C 0x82F8 0x60 menos eso...
+C 0x82FB ...+ el azar
+C 0x82FC la cuenta nueva
+C 0x82FF uno mas salido (0xE1B3)
+C 0x8306 en una escalera: el tipo 1
+C 0x8317 el turno siguiente
+C 0x831B 1?
+C 0x832F pasado el 5: otra vez
+C 0x8335 el hueco 0xE364
+C 0x8338 libre?
+C 0x833A no: el turno 2
+C 0x833C el tipo 3...
+C 0x833E ...con +0x0E = 1 (el piso de abajo)
+L 0x8343 sale_tipo8                Desde la fase 3, la mitad de las veces y si no hay otro (0xE1D0), el tipo 8 en vez del 3
+C 0x8343 la fase 3 o mas?
+C 0x8349 al azar, la mitad
+C 0x834E ya hay un tipo 8?
+C 0x8353 ahora si
+C 0x8357 el tipo 8
+C 0x835A el hueco 0xE384
+C 0x835F no: el turno 3
+C 0x8361 el tipo 3...
+C 0x8363 ...en el piso de en medio (2)
+C 0x836A el hueco 0xE3A4
+C 0x836F no: el turno 4
+C 0x8371 el tipo 3...
+C 0x8374 ...en el piso de arriba (3)
+C 0x8379 el hueco 0xE3B4
+C 0x837E no: el turno 5
+C 0x8380 el tipo 2
+C 0x8383 el hueco 0xE344
+C 0x8388 ocupado: nada
+C 0x8389 el tipo 1
+C 0x838C ya van 10?
+C 0x8392 desde 0xE374...
+C 0x8395 ...de 32 en 32
+C 0x8398 la fila (+2)
+C 0x839A uno de los cuatro al azar
+C 0x839F el siguiente
+C 0x83A3 libre?
+C 0x83A7 el tipo 5...
+C 0x83AB ...y su fila en +6
+C 0x83AD el siguiente...
+C 0x83B0 ...pasado 0xE3F4?
+C 0x83B4 otra vez desde el principio
+C 0x83B9 libre?
+C 0x83BB tampoco: nada
+C 0x83C4 la cuenta
+C 0x83CB el siguiente: + 16
+C 0x83D4 se mueve
+C 0x83D9 la Y
+C 0x83DC arriba del todo?
+C 0x83E0 abajo del todo?
+C 0x83E4 la X
+C 0x83E7 a la derecha del todo?
+C 0x83EB dentro
+L 0x83F7 otro_borra_va
+C 0x83F7 sus 16 bytes...
+C 0x83FC ...a cero
+C 0x843F 0-127
+C 0x8452 1?
+C 0x8456 2?
+C 0x845B 3?
+C 0x8460 4?
+C 0x8465 5?
+C 0x846A 6?
+C 0x846F 7: como el 4
+C 0x8474 8: como el 3
+C 0x8479 otro: nada
+C 0x848F en la escalera, en la fase 5: a la altura del protagonista
+L 0x849B tipo1_azar                En la escalera fuera de la 5: la mitad de las veces a la altura del protagonista
+C 0x849B al azar
+L 0x84A1 tipo1_y                   Su piso
+C 0x84A4 12 por encima
+C 0x84AC bit 4: abajo
+C 0x84B0 bit 5: en medio
+C 0x84B4 bit 6: arriba
+C 0x84C7 el piso
+C 0x84CA 2: arriba
+C 0x84CE 1: en medio
+C 0x84D2 la fase 5?
+C 0x84D9 Y 0x9F
+C 0x84DF Y 0xE8
+C 0x84E5 Y 0x6F
+C 0x84EB en el piso 7 (lo alto de la 5): abajo
+C 0x84F2 Y 0x3F
+C 0x84F6 al azar
+C 0x84FB X 0xF5...
+C 0x84FF ...mirando a la izquierda
+C 0x8505 X 0...
+C 0x8509 ...mirando a la derecha
+C 0x850D color 15
+C 0x8511 ya ha salido
+C 0x8515 hacia donde va?
+C 0x851B 3 a la izquierda
+C 0x8526 3 a la derecha
+C 0x8532 agachado: le pasa por encima
+C 0x8538 cerca_y
+C 0x8540 cerca_x1
+C 0x854B la fase 2...
+C 0x8553 ...con el objeto 0x6A...
+C 0x855A ...y una estrella en vuelo?
+C 0x8561 la estrella le da?
+C 0x8573 si: fuera (Y 0xE8)
+C 0x857F ya ha salido?
+C 0x8588 (+6 = 0x80)
+C 0x858C el dibujo 0x80...
+C 0x8590 ...color 9
+C 0x8595 hacia donde va?
+C 0x859B un punto a la izquierda
+C 0x85A0 un punto a la derecha
+C 0x85A3 0x80 o 0x84 cada 4 cuadros
+C 0x85AD color 9 o 10 cada 2
+C 0x85C0 en X?
+C 0x85CD la fase 2...
+C 0x85D5 ...con el objeto 0x6A...
+C 0x85DC ...y una estrella?
+C 0x85E3 la estrella le da?
+C 0x85F5 si: fuera
+C 0x85FC +7 = 1
+C 0x8607 ya ha salido
+C 0x860A su fila (+6, de 2 a 5)...
+C 0x860D ...x 24...
+C 0x8612 ...+ 0x38
+C 0x8617 la espera, al azar (+8)
+C 0x861A + 0-7
+C 0x8621 0x97
+C 0x8623 la Y
+C 0x8626 color 13
+C 0x862A al azar
+C 0x862F X 0xF5
+C 0x8635 X 0
+C 0x8639 +6 = 0x50
+C 0x8644 la altura y el lado
+C 0x864A abajo?
+C 0x864E en medio?
+C 0x8652 arriba: con el protagonista en el piso 7, no sale
+C 0x865A Y 0x3F
+C 0x8660 Y 0x6F
+C 0x8666 abajo: en la fase 5 con el protagonista en el piso 0, no sale
+C 0x8674 Y 0x9F
+C 0x8678 +6 = 0x50
+C 0x867C hacia donde va?
+C 0x8682 a la izquierda: el dibujo 0x50...
+C 0x8686 ...color 9
+C 0x868B a la derecha: 0x60, color 9
+L 0x86AC tipo3_tira_va
+C 0x86C9 el tipo 8 tira 0x9C...
+C 0x86E7 la espera, al azar (0-127)
+C 0x86EE el tipo 5...
+C 0x86F1 ...no cambia de lado
+C 0x86F4 al azar
+C 0x86FA a la izquierda
+C 0x86FF a la derecha
+C 0x870D el tipo 8...
+C 0x8710 ...anda siempre
+C 0x8717 en los impares, quieto
+C 0x871B la fase 3...
+C 0x8722 ...con el objeto 0x6A: quietos
+C 0x872A hacia donde va?
+C 0x8730 un punto a la izquierda
+C 0x8735 un punto a la derecha
+C 0x8738 el tipo 8?
+C 0x873F en la fase 3 con el objeto, no
+C 0x874C su X
+C 0x874F 0x50-0x57?
+C 0x8757 0x9E-0xA1?
+C 0x875F el estado 3
+C 0x8763 la espera a 0
+C 0x8767 0xE1D0 = 2
+C 0x876C el paso: cada 8 cuadros
+C 0x8771 su dibujo
+C 0x8777 cerca_y
+C 0x877F cerca_x1
+C 0x8784 saltando de lado?
+C 0x8788 si: le tumba
+C 0x8790 una estrella en vuelo?
+C 0x8797 le da en X?
+C 0x87A2 cerca_x2
+C 0x87A7 desde la fase 4, la estrella se acaba
+C 0x87AE con el objeto 0x6A, la estrella sigue
+C 0x87C1 una espera de 28 cuadros
+C 0x87C5 el estado 2 (cayendo)
+C 0x87CF la cuenta en la fila 1, columna 15...
+C 0x87D2 WRTVRM
+C 0x87DD WRTVRM: el 0...
+C 0x87E0 ...y delante...
+C 0x87E3 ...el 1
+C 0x87F0 en partida?
+C 0x87F5 el tipo 8?
+L 0x87FC tipo3_puntos10
+C 0x87FC 10 puntos
+L 0x8800 tipo3_puntos5
+C 0x8800 la fase 1?
+C 0x8807 5 puntos
+L 0x8809 tipo3_puntos_pon
+C 0x8809 a los puntos
+L 0x880C tipo3_fuera
+C 0x880F el estado 2?
+C 0x8814 la espera...
+C 0x881B acabada: borrado
+C 0x881E +9 = 0...
+C 0x8822 ...+6 = 0x88: el dibujo de caer
+C 0x8826 cada 8 cuadros
+C 0x882B su dibujo
+C 0x882E fuera?
+C 0x8831 el paso (0 u 8)
+C 0x8832 + el lado (0 o 0x10)
+C 0x8837 + el bit 0 de la espera x 4
+C 0x8840 + la base (+6)
+C 0x8844 el dibujo
+C 0x8847 en los impares...
+C 0x884C ...color 11
+C 0x884E cayendo (estado 2)?
+C 0x8855 color 15
+C 0x885A en la fase 3 con el objeto 0x6A...
+C 0x8867 ...color 10
+C 0x886C el tipo 5?
+C 0x8873 el tipo 8?
+C 0x8877 color 13
+C 0x887C color 11
+C 0x8881 color 14
+C 0x8886 color 3
+C 0x8896 el ancho
+C 0x889A desde la fila 1 del mapa
+C 0x88A1 su Y / 8...
+C 0x88A7 ...filas
+C 0x88AB la fila de sus pies
+C 0x88AC su X / 8
+C 0x88B4 en las otras: su Y / 8...
+C 0x88BA ...filas...
+C 0x88BD ...desde la fila 2 (0xE760)
+C 0x88C1 su X / 8...
+C 0x88C7 ...+ la columna corrida
+L 0x88CB suelo_casilla
+C 0x88CB la casilla
+C 0x88D5 la de la derecha
+C 0x88DB las dos: el estado 2 (cae)...
+C 0x88DF ...28 cuadros...
+C 0x88E3 ...y 6 puntos abajo
+C 0x88ED la Y o la X...
+C 0x88EF ...entre 8
+C 0x88F4 la siguiente a la derecha
+C 0x88F6 un agujero: hacia la izquierda
+C 0x88FA hacia donde va?
+C 0x8900 a la derecha: la de mas alla
+C 0x8901 una fila arriba...
+C 0x8909 ...un muro (0x40)?
+C 0x890D una espera de 48...
+C 0x8911 ...y la vuelta
+C 0x8919 a la izquierda: la de antes
+C 0x891C X va a menos
+C 0x8922 X va a mas
+C 0x8927 el estado 3?
+C 0x892C la cuenta
+C 0x8932 64?
+C 0x8936 el estado 4
+C 0x893A en los impares...
+C 0x8942 ...0x74; en los pares 0x70
+C 0x8947 los pares...
+C 0x894B ...color 2
+C 0x8950 color 11
+C 0x8955 la espera, uno menos
+C 0x895E el efecto 7
+C 0x8965 32-95...
+C 0x8967 ...+ 0x30
+C 0x8972 a su izquierda?
+C 0x8975 salta 8 a la derecha
+C 0x8979 8 a la izquierda
+C 0x897B su X + eso
+C 0x8982 el suelo
+C 0x8985 cae?
+C 0x898C en partida?
+C 0x8997 100 puntos
+C 0x899C los impares...
+C 0x89A4 0xB8...
+C 0x89A8 ...color 3
+C 0x89AE 0xBC...
+C 0x89B2 ...color 6
+C 0x89B6 toca al protagonista?
+C 0x89BE en X?
+C 0x89CB por la derecha?
+L 0x89D2 tipo3_borra
+L 0x89D5 tipo3_bajo
+C 0x89D5 abajo del todo (0xBE)?
+C 0x89E8 2 a la izquierda
+C 0x89F0 2 a la derecha
+C 0x89F6 el tipo 4?
+C 0x89FD 0x9C o 0xA0 cada 4 cuadros
+C 0x8A09 0xA4 o 0xA8
+C 0x8A13 toca al protagonista: en X...
+C 0x8A1B ...y en Y?
+C 0x8A29 la estrella le da?
+C 0x8A3E desde la fase 4 la estrella se acaba...
+C 0x8A45 ...antes, con el objeto 0x6A, sigue
+L 0x8A4D tipo4_quita
+C 0x8A4D la estrella fuera
+L 0x8A55 tipo4_fuera
+C 0x8A55 fuera por la derecha (X 0xFE)
+L 0x8A59 tipo4_sigue
+C 0x8A67 ya ha salido
+C 0x8A71 1: 0x40
+C 0x8A75 2: 0xB0
+C 0x8A7D 0xB0
+C 0x8A81 0x40
+C 0x8A85 0x18
+C 0x8A87 la X
+C 0x8A8A Y 0x38
+C 0x8A8E el dibujo 0x98...
+C 0x8A92 ...color 11
+C 0x8A96 0: recto
+C 0x8A9E menos de 8: recto
+C 0x8AA2 1: un poco a la izquierda
+C 0x8AA7 2: mas a la izquierda
+C 0x8AAC 3: mucho a la derecha
+C 0x8AB1 4: un poco a la derecha
+C 0x8AB6 casi encima: recto
+C 0x8AB8 en +7
+C 0x8ABC el estado 1?
+C 0x8AC0 la espera
+C 0x8AC6 16?
+C 0x8AC9 el dibujo 0xA4...
+C 0x8ACD ...color 9
+C 0x8AD1 el estado 2
+C 0x8AD5 de lado?
+C 0x8AEB 2 abajo
+C 0x8AF3 1 a la izquierda
+C 0x8AF8 2 a la izquierda
+C 0x8AFD 2 a la derecha
+C 0x8B00 1 a la derecha
+C 0x8B05 el dibujo y si toca, como el tipo 4
+C 0x8B0B la RAM del juego a cero
+C 0x8B0E la pantalla en blanco
+C 0x8B11 TIME 1100
+C 0x8B2A el segundo tercio
+C 0x8B30 el tercero
+C 0x8B3C el segundo tercio
+C 0x8B42 el tercero
+C 0x8B4B la cuenta a 0
+C 0x8B4F 8 cuadros
+C 0x8B56 en partida?
+L 0x8B61 espera_musica_suena
+C 0x8B6D la cuenta a 0
+C 0x8B73 16 cuadros
+C 0x8B81 desde la fase 4: el objeto 0x6A hace al protagonista intocable
+C 0x8B92 la cuenta a 0
+L 0x8B96 tocado_espera2
+C 0x8B96 2 cuadros
+C 0x8BA2 la otra cuenta a 0
+C 0x8BA6 un cuadro
+C 0x8BB4 a la tabla
+C 0x8BBA 0x88 o 0x90 cada 8 cuadros
+C 0x8BC1 el primero
+C 0x8BC4 y el segundo, + 4
+C 0x8BD7 32?
+C 0x8BDB 40?
+C 0x8BE7 64 cuadros
+C 0x8BEE el sonido callado
+C 0x8BF1 y 3 mas
+C 0x8C06 los sprites fuera
+C 0x8C09 en la fila 10, columna 12
+C 0x8C0C GAME OVER
+C 0x8C12 LDIRVM
+C 0x8C1A espera a que acabe
+C 0x8C1D sin demostracion...
+C 0x8C21 ...ni partida
+C 0x8C27 al titulo
+C 0x8C2A cinco filas
+C 0x8C2C la casilla...
+C 0x8C2D ...en blanco...
+C 0x8C30 ...una a la izquierda
+C 0x8C31 la fila siguiente (0x20 + 1)
+C 0x8C38 cinco filas
+C 0x8C3A la casilla...
+C 0x8C3B ...en blanco...
+C 0x8C3E ...una a la derecha
+C 0x8C3F la fila siguiente (0x20 - 1)
+C 0x8C45 a la pantalla
+C 0x8C49 los sprites fuera
+C 0x8C5D 32 cuadros
+C 0x8C6F el paso 2
+C 0x8C73 la hoja de la izquierda (fila 3, columna 15)...
+C 0x8C79 ...y la de la derecha
+C 0x8C81 el paso 2?
+C 0x8C85 el paso 3
+C 0x8C89 otra casilla mas afuera
+C 0x8C95 un cuadro
+C 0x8CA0 los sprites a la VRAM
+C 0x8CA9 0x28 o 0x30 cada 8 cuadros
+C 0x8CB8 arriba del todo (0x3C)?
+C 0x8CC7 a la VRAM
+C 0x8CCD de 0x91EA
+L 0x8CD2 puerta_fila
+C 0x8CD2 seis casillas
+C 0x8CDC la fila siguiente (0x20 - 6)
+C 0x8CE3 el mapa a la pantalla
+C 0x8D00 TIME a 0: la fase siguiente
+C 0x8D02 una unidad menos
+C 0x8D08 una decena menos...
+C 0x8D0C ...y las unidades a 9
+C 0x8D13 una centena menos...
+C 0x8D17 ...y lo de abajo a 9
+C 0x8D1F en la fase 1, 1 punto por unidad
+C 0x8D26 en las otras, tantos como otros tumbados (0xE1B2)...
+C 0x8D2C ...y 1 si ninguno
+C 0x8D2D los puntos
+C 0x8D30 TIME en la pantalla
+C 0x8D33 y los puntos
+C 0x8D38 espera a que acabe la musica
+C 0x8D47 la vuelta
+C 0x8D4A pasa de 9?
+C 0x8D4F a 0
+C 0x8D54 en la fila 0, columna 7...
+C 0x8D57 ...TIME:01 y HISCORE (25 casillas)
+C 0x8D60 en la fila 1, columna 19...
+C 0x8D63 ...SCORE: 13 casillas desde 0x8F50, el HISCORE sin el HI
+C 0x8D6C las cifras
+C 0x8D6F la fase
+C 0x8D72 TIME
+C 0x8D75 las vidas
+C 0x8D78 en la fila 1, columna 12...
+C 0x8D7B ...el dibujo del ninja y ":00"
+C 0x8D9B 5 como mucho
+C 0x8DA2 la cuenta de cuadros
+C 0x8DA9 la cuenta a 0
+C 0x8DB7 menos de 100: el efecto 1
+C 0x8DBC las unidades?
+C 0x8DC2 las decenas?
+C 0x8DC6 las centenas?
+C 0x8DCA los millares?
+C 0x8DD1 sin tiempo (0xE182)
+C 0x8DE3 en el sitio de TIME
+D 0x8F4B 0x8F5D texto_hiscore       "   HISCORE:000000" del marcador; SCORE es el mismo texto desde 0x8F50, sin el HI
+C 0x9A5D la fila 0: 0xB1 0xB2 (48 parejas = 96 casillas, una fila de 0x60)
+L 0x9A6C mapa_fila_b5              La fila 1: 0xB5 0xB6
+L 0x9A76 mapa_fila_bf53            La fila 2: las seis casillas de 0xBF53 repetidas
+L 0x9A87 mapa_suelo                El suelo: la fila 21 (0xEEE0) de 0x5E
+C 0x9A91 las filas 8, 14 y 20: 0xB0 (los pisos)
+C 0x9AA0 y cinco filas mas
+C 0x9A62 0xB1...
+C 0x9A65 ...0xB2
+C 0x9A6A 48 parejas
+C 0x9A6C 0xB5...
+C 0x9A6F ...0xB6
+C 0x9A74 una fila
+C 0x9AC5 0x5E...
+C 0x9AC8 ...0x5F
+C 0x9ACD ocho filas
+C 0x9AD0 y las piezas
+C 0x9B19 una pieza
+C 0x9B1F una menos
+C 0x9B25 la direccion siguiente
+C 0x9B2E la lista siguiente
+C 0x9B31 una pieza
+C 0x9B37 una menos
+C 0x9B41 la direccion siguiente
+C 0x9B46 la lista siguiente
+C 0x9B49 una pieza
+C 0x9B4F una menos
+C 0x9B59 la direccion siguiente
+C 0x9B5E la lista siguiente
+C 0x9B61 una pieza
+C 0x9B67 una menos
+C 0x9B71 la direccion siguiente
+C 0x9B76 la lista siguiente
+C 0x9B79 una pieza
+C 0x9B7F una menos
+C 0x9B89 la direccion siguiente
+C 0x9B8E la lista siguiente
+C 0x9B91 una pieza
+C 0x9B97 una menos
+C 0x9BA1 la direccion siguiente
+C 0x9BAC la lista siguiente
+C 0x9BAF una pieza
+C 0x9BB5 una menos
+C 0x9BBF la direccion siguiente
+C 0x9BCB la casilla
+C 0x9BCE la fase 5?
+C 0x9BE4 la primera fila de 0xBE01
+C 0x9BED las otras de 0xBE04
+C 0x9BF0 una casilla
+C 0x9C0F seis filas
+C 0x9C11 la primera de 0xBE07
+C 0x9C1A las otras de 0xBE0A
+C 0x9C1D una casilla
+C 0x9C24 la fila siguiente, una casilla a la izquierda
+C 0x9C38 y la casilla 0x3F
+C 0x9C3C la puerta
+C 0x9C41 el cofre
+C 0x9C44 cuatro filas
+C 0x9C46 cuatro casillas
+C 0x9C64 la del objeto 0x6A
+C 0x9C69 la de 0xBE0D
+C 0x9C6C tres filas
+C 0x9C6E tres casillas
+C 0x9C70 una casilla
+C 0x81AE el protagonista en 0xEE30 del mapa
+C 0x81B4 la pantalla corrida 43 filas (0x2B)
+C 0x81B9 el ancho del mapa, 32
+C 0x819B el protagonista en 0xEEB0 del mapa
+C 0x81A1 la pantalla corrida 32 columnas
+C 0x81A6 el ancho del mapa, 0x60
+C 0x8A6C 0-3
+C 0x8AD8 0: recto
+C 0x8ADB 1: un punto a la izquierda
+C 0x8ADF 2: dos
+C 0x8AE3 3: dos a la derecha
+C 0x8AE7 4: uno a la derecha
+C 0xA28C sonando?
+C 0xA28F una pedida?
+C 0xA294 un efecto en el canal A?
+C 0xA298 pedido?
+C 0xA29E un efecto en B y C?
+C 0xA2A2 pedido?
+C 0xA2AF la pedida gana?
+C 0xA2B7 la pedida gana?
+C 0xA2CC al canal de trabajo
+C 0xA2CF los registros 0 y 8
+C 0xA2D2 el canal 0
+C 0xA2D7 y de vuelta
+C 0xA2DE sigue?
+C 0xA2E1 1: acabada
+C 0xA2E6 2: 0xF7, el efecto del canal A acaba
+C 0xB7D2 0xA0
+C 0xB7D5 los 16 bits...
+C 0xB7D6 ...hasta 0
+C 0x95B8 el ancho
+C 0x95BF una fila mas
+C 0x95C4 el ancho
+C 0x95CC una fila menos
+C 0x9C48 una casilla
+C 0x9C50 la fase 5?
+L 0x88CF suelo_casilla_hl
+L 0x9A7B mapa_fila_bf53_casilla
+L 0xA29D sonido_mira_bc
+L 0xA3A3 canal_orden          Una orden (0xF0 o mas): 0xF0 ruido, 0xFF final, 0xF7 callar, 0xFE al principio, 0xFD-0xF8 las marcas y sus vueltas
+L 0xB75F filas_suma
+C 0x8B7B el objeto 0x6A (0xE1B4)?

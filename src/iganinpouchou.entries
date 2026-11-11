@@ -1,0 +1,9 @@
+# Puntos de entrada que el trazado NO puede deducir solo.
+#
+# Cada uno lleva escrito POR QUE hace falta.
+
+# El arranque: la cabecera da INIT en 0x8010.
+0x8010   # INIT
+
+# La interrupcion: INIT pone su direccion (0x8F81) en H.TIMI (0xFDA0) y el "jp" en 0xFD9F (0x8026-0x802E).
+0x8F81
