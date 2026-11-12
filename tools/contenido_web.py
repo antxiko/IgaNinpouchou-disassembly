@@ -91,7 +91,10 @@ PAGINAS = [
       "SCORE inside HISCORE, 999,999 that becomes 990,000, the title colour, the scroll in the last kakejiku "
       "and tiles made of code",
       "SCORE dentro de HISCORE, 999.999 que se vuelve 990.000, el color del t&iacute;tulo, el rollo en el "
-      "&uacute;ltimo kakejiku y casillas hechas de c&oacute;digo")],
+      "&uacute;ltimo kakejiku y casillas hechas de c&oacute;digo"),
+     ("SECRETS-AND-BUGS.html", "SECRETOS-Y-FALLOS.html", "Secrets and bugs", "Secretos y fallos",
+      "what was searched for: no hidden keys, 990,000 past 999,999, and the cursor keys and joystick mixed into another direction",
+      "lo que se ha buscado: ninguna tecla escondida, 990.000 pasado 999.999, y los cursores y el mando que se mezclan en otra direcci&oacute;n")],
     [("UNDER-THE-HOOD.html", "POR-DENTRO.html", "Under the hood", "Por dentro",
       "rebuilding the ROM, the BIOS it uses, the interrupt and the loop, the map in RAM, the RAM and the tools",
       "rehacer la ROM, la BIOS que usa, la interrupci&oacute;n y el bucle, el mapa en la RAM, la RAM y las "

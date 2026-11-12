@@ -2050,7 +2050,7 @@ palanca:		; La palanca: los cursores o el mando 1 (GTSTCK 0 y 1), en 0xE180
 	call 000d5h		;8fe2   ; GTSTCK 1: el mando 1
 	ld c,a			;8fe5
 	ld a,(0e181h)		;8fe6
-	or c			;8fe9   ; uno u otro
+	or c			;8fe9   ; uno u otro: un OR de dos numeros de direccion (1-8, no bits): con los dos a la vez sale otra
 	ld (0e180h),a		;8fea
 	ret			;8fed
 interrupcion_quieto:		; Fuera de partida: con la demostracion en marcha (0xE048), cada 24 cuadros una direccion y un boton al azar; si no, el boton de empezar y la palanca

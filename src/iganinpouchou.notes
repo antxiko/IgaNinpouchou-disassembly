@@ -111,7 +111,7 @@ C 0x8FBD lo sostenido
 L 0x8FD9 palanca                   La palanca: los cursores o el mando 1 (GTSTCK 0 y 1), en 0xE180
 C 0x8FDA GTSTCK 0: los cursores
 C 0x8FE2 GTSTCK 1: el mando 1
-C 0x8FE9 uno u otro
+C 0x8FE9 uno u otro: un OR de dos numeros de direccion (1-8, no bits): con los dos a la vez sale otra
 C 0x902C ...o lo del mando
 L 0x9034 boton_mando               GTTRIG A: lo recien pulsado en (DE) y lo sostenido en (HL)
 C 0x9034 GTTRIG
